@@ -7,7 +7,8 @@ String inputString = "";    // A string to hold incoming data
 bool stringComplete = true;  // Whether the string is complete
 
 void setup() {
-  board::init();
+
+  board::init(config::difficulty::EASY);
 
   pinMode(2, OUTPUT); //0
   pinMode(3, OUTPUT);
@@ -80,6 +81,20 @@ void loop() {
       for(int i = 0; i < NUM_LEDS; i++)
       {
         board::getHandle().setPixelColor(i, colors::OFF); 
+      }
+    }
+    else if (inputString == "B\n")
+    {
+      for(int i = 0; i < NUM_LEDS; i++)
+      {
+        board::getHandle().setPixelColor(i, config::BORDER_COLOR); 
+      }
+    }
+    else if (inputString == "Y\n")
+    {
+      for(int i = 0; i < NUM_LEDS; i++)
+      {
+        board::getHandle().setPixelColor(i, config::getGameConfig().SNAKE_COLOR); 
       }
     }
     else
