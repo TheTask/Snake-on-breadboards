@@ -1,14 +1,14 @@
-#include "snake_board.h"
+#include "leds.h"
 #include "snake_io.h"
 #include "colors.h"
-
+#include "snake.h"
 
 String inputString = "";    // A string to hold incoming data
 bool stringComplete = true;  // Whether the string is complete
 
 void setup() {
 
-  board::init(config::difficulty::EASY);
+  leds::init(config::difficulty::EASY);
 
   pinMode(2, OUTPUT); //0
   pinMode(3, OUTPUT);
@@ -27,8 +27,9 @@ void setup() {
   randomSeed(analogRead(0));
 }
 
-void loop() {
-
+void loop() 
+{
+  /*
   // Check if a string has been completed
   analogWrite(3, 128);
   if (stringComplete) {
@@ -115,7 +116,9 @@ void loop() {
     inputString = "";
     stringComplete = false;
   }
-  board::display();
+  */
+  
+  leds::display(snake::board);
   delay(10);
 }
 

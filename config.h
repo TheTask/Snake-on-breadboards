@@ -6,6 +6,7 @@
 
 namespace config 
 {
+    const uint8_t  INIT_SNAKE_LENGTH = 3;
     const uint8_t  BOARD_BRIGHTNESS = 10;
     const uint32_t BORDER_COLOR = colors::LIGHT_RED;
     const uint32_t FOOD_COLOR = colors::WHITE;
