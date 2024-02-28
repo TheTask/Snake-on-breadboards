@@ -96,7 +96,7 @@ int main()
 	}
 	system( "PAUSE" );
 }
-const void ZobrazPlochu() 
+const void ZobrazPlochu() DONE
 {
 	for( unsigned short i = 0; i < SIRKAPLOCHY + 2; i++ ) printf( "%c",'/' ); printf( "\n" ); //horna hranica
 
@@ -113,7 +113,7 @@ const void ZobrazPlochu()
 	for( unsigned short i = 0; i < SIRKAPLOCHY + 2; i++ ) printf( "%c",'/' ); printf( "\n" ); //spodna hranica	
 	printf( "Dlzka hada: %d\n",dlzkaHada );
 }
-void NormalizujPlochu()
+void NormalizujPlochu() DONE
 {
 	for( unsigned short x = 0; x < SIRKAPLOCHY; x++ )
 	{

@@ -8,7 +8,7 @@ namespace snake
 {
   extern char board[];
 
-  void InitBoard();
+  void initBoard();
 }
 
 

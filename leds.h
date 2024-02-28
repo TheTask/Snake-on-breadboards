@@ -16,10 +16,8 @@ namespace leds
 
   extern Adafruit_NeoPixel _leds;
 
-  void init( config::difficulty difficulty );
+  void init();
   void display( char* board );
-
-  Adafruit_NeoPixel& getHandle(); //?
 }
 
 #endif

@@ -6,10 +6,13 @@
 String inputString = "";    // A string to hold incoming data
 bool stringComplete = true;  // Whether the string is complete
 
-void setup() {
 
-  leds::init(config::difficulty::EASY);
+int led_row = 2;
+int led_col = 2;
 
+void setup() 
+{
+    /*
   pinMode(2, OUTPUT); //0
   pinMode(3, OUTPUT);
   pinMode(4, OUTPUT);
@@ -21,10 +24,17 @@ void setup() {
   pinMode(10, OUTPUT);
   digitalWrite(2, HIGH);
 
+  
+
+  randomSeed(analogRead(0));
+  */
   Serial.begin(115200);
   inputString.reserve(200);  // Reserve 200 bytes for the inputString
 
-  randomSeed(analogRead(0));
+  config::setDifficulty(config::difficulty::HARD);
+  leds::init();
+
+  snake::initBoard();
 }
 
 void loop() 
@@ -117,8 +127,24 @@ void loop()
     stringComplete = false;
   }
   */
+
+  if (stringComplete)
+  {
+    if (inputString == "U\n") led_row--;
+    else if (inputString == "D\n") led_row++;
+    else if (inputString == "R\n") led_col++;
+    else if (inputString == "L\n") led_col--;
+  }
+
+  snake::board[ led_row * leds::WIDTH + led_col ] = 'O';
+
+  Serial.print(inputString);
+  inputString = "";
+  stringComplete = false;
+
   
   leds::display(snake::board);
+
   delay(10);
 }
 

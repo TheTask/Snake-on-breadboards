@@ -4,13 +4,20 @@
 char snake::board[ leds::SIZE ];
 
 
-void InitBoard()
+void snake::initBoard()
 {
-	for( unsigned short x = 0; x < leds::WIDTH; x++ )
+	for( unsigned short row = 0; row < leds::HEIGHT; row++ )
 	{
-		for( unsigned short y = 0; y < leds::HEIGHT; y++ )
+		for( unsigned short col = 0; col < leds::WIDTH; col++ )
 		{
-			 snake::board[ y * leds::HEIGHT + x ] = ' ';
+      if( row == 0 || row == leds::HEIGHT - 1 || col == 0 || col == leds::WIDTH - 1 )
+      {
+        snake::board[ row * leds::WIDTH + col ] = '/'; //border
+      }
+      else
+      {
+        snake::board[ row * leds::WIDTH + col ] = ' ';
+      }
 		}
 	}
 }

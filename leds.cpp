@@ -9,7 +9,7 @@
 Adafruit_NeoPixel leds::_leds(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 
-void leds::init(config::difficulty difficulty)
+void leds::init()
 {
     _leds.begin(); 
     _leds.setBrightness(config::BOARD_BRIGHTNESS);
@@ -17,15 +17,18 @@ void leds::init(config::difficulty difficulty)
 
 void leds::display( char* board )
 {
-      for(int i = 0; i < leds::SIZE; i++)
+  uint8_t index = 0;
+
+  for( uint8_t row = 0; row < leds::HEIGHT; row++ )
   {
-        _leds.setPixelColor(board[i], colors::RED); // Set the first pixel to red
+    for( uint8_t col = 0; col < leds::WIDTH; col++ )
+    {
+      if( board[ index ] == '/' ) _leds.setPixelColor(index, config::getGameConfig().BORDER_COLOR);
+      else if( board[ index ] == 'O' ) _leds.setPixelColor(index, config::getGameConfig().SNAKE_COLOR);
+      else if( board[ index ] == ' ' ) _leds.setPixelColor(index, colors::OFF);
+      index++;
+    }
   }
-    _leds.show();
-}
 
-
-Adafruit_NeoPixel& leds::getHandle()
-{
-    return _leds;
+  _leds.show();
 }
