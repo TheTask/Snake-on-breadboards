@@ -35,6 +35,7 @@ void setup()
   leds::init();
 
   snake::initBoard();
+  snake::initSnake();
 }
 
 void loop() 
@@ -136,7 +137,7 @@ void loop()
     else if (inputString == "L\n") led_col--;
   }
 
-  snake::board[ led_row * leds::WIDTH + led_col ] = 'O';
+  //snake::board[ led_row * leds::WIDTH + led_col ] = 'O';
 
   Serial.print(inputString);
   inputString = "";

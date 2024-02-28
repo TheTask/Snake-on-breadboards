@@ -15,7 +15,7 @@ void leds::init()
     _leds.setBrightness(config::BOARD_BRIGHTNESS);
 }
 
-void leds::display( char* board )
+void leds::display( uint8_t* board )
 {
   uint8_t index = 0;
 

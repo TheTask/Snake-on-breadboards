@@ -17,7 +17,7 @@ namespace leds
   extern Adafruit_NeoPixel _leds;
 
   void init();
-  void display( char* board );
+  void display( uint8_t* board );
 }
 
 #endif
