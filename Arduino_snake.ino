@@ -3,18 +3,15 @@
 #include "colors.h"
 #include "snake.h"
 
-String inputString = "";    // A string to hold incoming data
-bool stringComplete = true;  // Whether the string is complete
-
 volatile char lastChar = 0;
-unsigned long previousMillis = 0; // Stores the last time the game state was updated
-const long interval = 200;
+
+uint64_t previousMillis = 0; 
+const uint32_t interval = 1000 / config::getGameConfig().UPDATES_PER_SECOND;
 
 void setup() 
 {
   randomSeed( analogRead( 0 ) );
   Serial.begin( 115200 );
-  inputString.reserve( 200 );  // Reserve 200 bytes for the inputString
 
   config::setDifficulty( config::difficulty::EASY );
 
@@ -34,7 +31,7 @@ void loop()
     snake::initFood();
   }
 
-  unsigned long currentMillis = millis();
+  uint64_t currentMillis = millis();
 
   if( currentMillis - previousMillis >= interval ) 
   {
@@ -50,14 +47,15 @@ void loop()
   if( lastChar != 0 ) 
   {
     String direction = String( lastChar );
-    snake::direction newDir = snake::str2dir(direction);
+    snake::direction newDir = snake::str2dir( direction );
     snake::lastDir = newDir;
     
     lastChar = 0; 
   }
 }
 
-void serialEvent() {
+void serialEvent() 
+{
   const char allowedChars[] = { 'U','D','L','R','Y','A','B','X' };
 
   if( Serial.available() > 0 ) 
@@ -65,7 +63,7 @@ void serialEvent() {
     char inChar = (char)Serial.read();
 
     // Filter out non-directional characters
-    for( int i = 0; i < sizeof( allowedChars ) / sizeof( allowedChars[ 0 ] ); i++ ) 
+    for( uint8_t i = 0; i < sizeof( allowedChars ) / sizeof( allowedChars[ 0 ] ); i++ ) 
     {
       if( inChar == allowedChars[ i ] )  { lastChar = inChar; break;  }
     }
