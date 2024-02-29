@@ -18,6 +18,7 @@ namespace leds
 
   void init();
   void display( uint8_t* board );
+  void clear();
 }
 
 #endif

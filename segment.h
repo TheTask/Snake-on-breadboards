@@ -16,10 +16,10 @@ class Segment
     inline uint8_t getRow() const { return this->row; }
     inline uint8_t getCol() const { return this->col; }
 
-    inline void incRow(){ this->row++; }
-    inline void incCol(){ this->col++; }
-    inline void decRow(){ this->row--; }
-    inline void decCol(){ this->col--; }
+    inline void incRow(){ ++row; }
+    inline void incCol(){ ++col; }
+    inline void decRow(){ --row; }
+    inline void decCol(){ --col; }
 
     bool operator==( const Segment& other ) const 
     {

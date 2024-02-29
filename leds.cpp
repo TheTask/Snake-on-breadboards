@@ -13,6 +13,7 @@ void leds::init()
 {
     _leds.begin(); 
     _leds.setBrightness(config::BOARD_BRIGHTNESS);
+    leds::clear();
 }
 
 void leds::display( uint8_t* board )
@@ -23,13 +24,22 @@ void leds::display( uint8_t* board )
   {
     for( uint8_t col = 0; col < leds::WIDTH; col++ )
     {
-      if( board[ index ] == '/' )      _leds.setPixelColor( index, config::getGameConfig().BORDER_COLOR );
-      else if( board[ index ] == 'O' ) _leds.setPixelColor( index, config::getGameConfig().SNAKE_COLOR );
-      else if( board[ index ] == 'X' ) _leds.setPixelColor( index, config::FOOD_COLOR );
-      else if( board[ index ] == ' ' ) _leds.setPixelColor( index, colors::OFF );
+      if( board[ index ] == '/' )      _leds.setPixelColor( index,config::getGameConfig().BORDER_COLOR );
+      else if( board[ index ] == 'O' ) _leds.setPixelColor( index,config::getGameConfig().SNAKE_COLOR );
+      else if( board[ index ] == 'X' ) _leds.setPixelColor( index,config::FOOD_COLOR );
+      else if( board[ index ] == ' ' ) _leds.setPixelColor( index,colors::OFF );
       index++;
     }
   }
 
+  _leds.show();
+}
+
+void leds::clear()
+{
+  for( uint32_t i = 0; i < leds::SIZE; i++ )
+  {
+    _leds.setPixelColor( i,colors::OFF );
+  }
   _leds.show();
 }
