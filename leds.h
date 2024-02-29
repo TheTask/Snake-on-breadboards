@@ -4,8 +4,8 @@
 #include <Adafruit_NeoPixel.h>
 #include "config.h"
 
-#define LED_PIN     13  // Define the pin connected to the NeoPixels
-#define NUM_LEDS    100  // Number of LEDs you are controlling
+#define LED_PIN     13 
+#define NUM_LEDS    100  
 
 namespace leds
 {

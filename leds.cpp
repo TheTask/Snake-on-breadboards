@@ -23,9 +23,10 @@ void leds::display( uint8_t* board )
   {
     for( uint8_t col = 0; col < leds::WIDTH; col++ )
     {
-      if( board[ index ] == '/' ) _leds.setPixelColor(index, config::getGameConfig().BORDER_COLOR);
-      else if( board[ index ] == 'O' ) _leds.setPixelColor(index, config::getGameConfig().SNAKE_COLOR);
-      else if( board[ index ] == ' ' ) _leds.setPixelColor(index, colors::OFF);
+      if( board[ index ] == '/' )      _leds.setPixelColor( index, config::getGameConfig().BORDER_COLOR );
+      else if( board[ index ] == 'O' ) _leds.setPixelColor( index, config::getGameConfig().SNAKE_COLOR );
+      else if( board[ index ] == 'X' ) _leds.setPixelColor( index, config::FOOD_COLOR );
+      else if( board[ index ] == ' ' ) _leds.setPixelColor( index, colors::OFF );
       index++;
     }
   }

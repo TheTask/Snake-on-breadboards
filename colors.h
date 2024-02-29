@@ -16,7 +16,7 @@ namespace colors
 
     const uint32_t OFF = 0x00000000; 
 
-    const uint32_t SNAKE = colors::GREEN ^ colors::RED;
+    const uint32_t SNAKE = colors::GREEN | colors::RED;
 }
 
 #endif 

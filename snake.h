@@ -11,13 +11,31 @@ extern int storage_array[];
 
 namespace snake
 {
-  extern Vector<SnakeSegment> snake_vec;
+  enum direction
+  {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
+  };
+
+  extern Vector< Segment > snake_vec;
   extern uint8_t board[];
+
+  extern uint8_t food_row;
+  extern uint8_t food_col;
 
   void initBoard();
   void initSnake();
-}
+  void initFood();
+  void move( snake::direction lastDir );
 
+  boolean hasEatenFood();
+  void deleteEndOfSnake();
+
+  bool hasWon();
+  bool hasLost();
+}
 
 
 #endif

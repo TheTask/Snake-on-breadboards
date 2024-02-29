@@ -6,7 +6,7 @@
 
 namespace config 
 {
-    const uint8_t  INIT_SNAKE_LENGTH = 3;
+    const uint8_t  INIT_SNAKE_LENGTH = 2;
     const uint8_t  BOARD_BRIGHTNESS = 10;
     const uint32_t FOOD_COLOR = colors::WHITE;
 
@@ -28,13 +28,13 @@ namespace config
     {
       const uint32_t SNAKE_COLOR;
       const uint32_t BORDER_COLOR;
-      const float    SPEED;
+      const uint8_t  UPDATES_PER_SECOND;
 
-      gameConfig( uint32_t snakeColor,uint32_t borderColor,float speed )
+      gameConfig( uint32_t snakeColor,uint32_t borderColor,uint8_t updatesPerSecond )
           : 
           SNAKE_COLOR( snakeColor ),
           BORDER_COLOR( borderColor ),
-          SPEED( speed )
+          UPDATES_PER_SECOND( updatesPerSecond )
           {}
     };
 
@@ -43,11 +43,11 @@ namespace config
         switch( _difficulty ) 
         {
             case EASY:
-                return gameConfig( colors::GREEN,colors::LIGHT_BLUE ^ colors::LIGHT_RED,1.0 ); 
+                return gameConfig( colors::GREEN,colors::LIGHT_BLUE | colors::LIGHT_RED,1.0 ); 
             case MEDIUM:
-                return gameConfig( colors::BLUE,colors::LIGHT_GREEN ^ colors::LIGHT_RED,2.0 ); 
+                return gameConfig( colors::BLUE,colors::LIGHT_GREEN | colors::LIGHT_RED,2.0 ); 
             case HARD:
-                return gameConfig( colors::RED,colors::LIGHT_BLUE ^ colors::LIGHT_GREEN,3.0 ); 
+                return gameConfig( colors::RED,colors::LIGHT_BLUE | colors::LIGHT_GREEN,3.0 ); 
         }
     }
 }

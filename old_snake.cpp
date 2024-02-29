@@ -123,7 +123,7 @@ void NormalizujPlochu() DONE
 		}
 	}
 }
-const void InicializujHada()
+const void InicializujHada() DONE
 {
 	for( unsigned short i = 0; i < dlzkaHada; i++ )
 	{
@@ -134,7 +134,7 @@ const void InicializujHada()
 		plocha[ i ] = 'O';
 	}
 }
-const void InicializujPotravu()
+const void InicializujPotravu() DONE
 {
 	xPotrava = rand() % SIRKAPLOCHY;
 	yPotrava = rand() % VYSKAPLOCHY;
@@ -147,6 +147,7 @@ const void InicializujPotravu()
 
 	plocha[ yPotrava * SIRKAPLOCHY + xPotrava ] = 'X'; 
 }
+
 void Pohyb()
 {
 	if( poslednySmer == 'd' )
@@ -189,13 +190,13 @@ void Pohyb()
 	{}
 
 }
-void ZmazKoniecHada()
+void ZmazKoniecHada() DONE
 {
 	ClanokHada temp = m_Had[ 0 ]; //prvy je vlastne posledny
 	plocha[ temp.y * SIRKAPLOCHY + temp.x ] = ' ';
 	m_Had.erase( m_Had.begin() );
 }
-bool ZozralPotravu()
+bool ZozralPotravu() DONE
 {
 	ClanokHada clanok = m_Had.at( m_Had.size() - 1 );
 	ClanokHada potrava;

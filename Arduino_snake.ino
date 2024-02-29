@@ -23,26 +23,26 @@ void setup()
   pinMode(9, OUTPUT);
   pinMode(10, OUTPUT);
   digitalWrite(2, HIGH);
-
   
-
-  randomSeed(analogRead(0));
   */
+  randomSeed(analogRead(0));
+
   Serial.begin(115200);
   inputString.reserve(200);  // Reserve 200 bytes for the inputString
 
-  config::setDifficulty(config::difficulty::HARD);
+  config::setDifficulty(config::difficulty::EASY);
   leds::init();
 
   snake::initBoard();
   snake::initSnake();
+  snake::initFood();
 }
 
 void loop() 
 {
   /*
   // Check if a string has been completed
-  analogWrite(3, 128);
+  
   if (stringComplete) {
     int r = random(255);
     int g = random(255);
@@ -135,18 +135,30 @@ void loop()
     else if (inputString == "D\n") led_row++;
     else if (inputString == "R\n") led_col++;
     else if (inputString == "L\n") led_col--;
+    Serial.print(inputString);
   }
 
   //snake::board[ led_row * leds::WIDTH + led_col ] = 'O';
 
-  Serial.print(inputString);
+  
   inputString = "";
   stringComplete = false;
 
-  
-  leds::display(snake::board);
+  if( snake::hasEatenFood() ) 
+		{
+      FoodSegment segment = FoodSegment( snake::food_row,snake::food_col );
+      snake::snake_vec.push_back(segment);
+      snake::initFood();
+		}
 
-  delay(10);
+  leds::display( snake::board );
+
+  snake::move( snake::direction::DOWN ); //WRONG DIRECTION!!!!
+
+  if( snake::hasWon() ){}
+  if( snake::hasLost() ){}
+
+  delay( 1000 / config::getGameConfig().UPDATES_PER_SECOND );
 }
 
 void serialEvent()
