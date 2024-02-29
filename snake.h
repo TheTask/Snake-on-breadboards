@@ -25,7 +25,7 @@ namespace snake
     RIGHT
   }
 
-  inline lastDir = snake::direction::UP;
+  inline lastDir = snake::direction::DOWN;
   
 
   void initBoard();

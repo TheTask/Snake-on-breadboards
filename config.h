@@ -47,7 +47,7 @@ namespace config
             case MEDIUM:
                 return gameConfig( colors::BLUE,colors::LIGHT_GREEN | colors::LIGHT_RED,6.0 ); 
             case HARD:
-                return gameConfig( colors::RED,colors::LIGHT_BLUE | colors::LIGHT_GREEN,8.0 ); 
+                return gameConfig( colors::RED,colors::LIGHT_BLUE | colors::LIGHT_GREEN,10.0 ); 
         }
     }
 }

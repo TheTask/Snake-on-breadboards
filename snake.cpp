@@ -32,7 +32,7 @@ void snake::initSnake()
 {
 	for( uint8_t i = 0; i < config::INIT_SNAKE_LENGTH; i++ )
 	{
-		SnakeSegment segment = SnakeSegment( i + leds::HEIGHT / 2,1 ); //roughly middle screen
+		SnakeSegment segment = SnakeSegment( leds::HEIGHT / 2,i + 1 ); //roughly middle screen
 		snake::snake_vec.push_back( segment );
 		snake::board[ i + ( leds::HEIGHT / 2 * leds::WIDTH ) + 1 ] = 'O';
 	}

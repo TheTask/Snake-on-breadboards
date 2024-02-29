@@ -1,5 +1,5 @@
+#include <avr/wdt.h>
 #include "leds.h"
-#include "snake_io.h"
 #include "colors.h"
 #include "snake.h"
 
@@ -13,7 +13,7 @@ void setup()
   randomSeed( analogRead( 0 ) );
   Serial.begin( 115200 );
 
-  config::setDifficulty( config::difficulty::EASY );
+  config::setDifficulty( config::difficulty::HARD );
 
   leds::init();
 
@@ -48,6 +48,10 @@ void loop()
   {
     String direction = String( lastChar );
     snake::direction newDir = snake::str2dir( direction );
+    if( newDir != snake::lastDir )
+    {
+      Serial.print( newDir );
+    }
     snake::lastDir = newDir;
     
     lastChar = 0; 
@@ -68,4 +72,10 @@ void serialEvent()
       if( inChar == allowedChars[ i ] )  { lastChar = inChar; break;  }
     }
   }
+}
+
+void softwareReset() 
+{
+  wdt_enable( WDTO_15MS ); // Enable the watchdog with the shortest time-out
+  while (true) {} // Wait for the watchdog to reset the microcontroller
 }
