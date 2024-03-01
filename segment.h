@@ -6,24 +6,24 @@
 class Segment
 {
   private:
-    uint8_t row;
-    uint8_t col;
+    uint8_t _row;
+    uint8_t _col;
 
   public:
     Segment(){}
-	  Segment( uint8_t row,uint8_t col ) : row(row), col(col) {}
+	  Segment( uint8_t row,uint8_t col ) : _row(row), _col(col) {}
 
-    inline uint8_t getRow() const { return this->row; }
-    inline uint8_t getCol() const { return this->col; }
+    inline uint8_t getRow() const { return this->_row; }
+    inline uint8_t getCol() const { return this->_col; }
 
-    inline void incRow(){ ++row; }
-    inline void incCol(){ ++col; }
-    inline void decRow(){ --row; }
-    inline void decCol(){ --col; }
+    inline void incRow(){ this->_row++; }
+    inline void incCol(){ this->_col++; }
+    inline void decRow(){ this->_row--; }
+    inline void decCol(){ this->_col--; }
 
     bool operator==( const Segment& other ) const 
     {
-        return row == other.row && col == other.col;
+        return _row == other._row && _col == other._col;
     }
 };
 
@@ -36,5 +36,6 @@ class FoodSegment : public Segment
 {
   public: using Segment::Segment; 
 };
+
 
 #endif

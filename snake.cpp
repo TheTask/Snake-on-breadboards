@@ -10,6 +10,7 @@ uint8_t snake::food_row;
 uint8_t snake::food_col;
 
 
+
 void snake::initBoard()
 {
 	for( uint8_t row = 0; row < leds::HEIGHT; row++ )
@@ -28,6 +29,7 @@ void snake::initBoard()
 	}
 }
 
+
 void snake::initSnake()
 {
 	for( uint8_t i = 0; i < config::INIT_SNAKE_LENGTH; i++ )
@@ -37,6 +39,7 @@ void snake::initSnake()
 		snake::board[ i + ( leds::HEIGHT / 2 * leds::WIDTH ) + 1 ] = 'O';
 	}
 }
+
 
 void snake::initFood()
 {
@@ -51,6 +54,7 @@ void snake::initFood()
 
 	snake::board[ snake::food_row * leds::WIDTH + snake::food_col  ] = 'X';
 }
+
 
 void snake::move( snake::direction lastDir )
 { 
@@ -77,14 +81,15 @@ void snake::move( snake::direction lastDir )
   snake::deleteEndOfSnake();
 } 
 
+
 snake::direction snake::str2dir(String direction)
 {
-  if((direction == "U" || direction == "Y") && snake::lastDir != snake::direction::DOWN) return snake::direction::UP;
-  else if((direction == "D" || direction == "A") && snake::lastDir != snake::direction::UP) return snake::direction::DOWN;
-  else if((direction == "R" || direction == "B") && snake::lastDir != snake::direction::LEFT) return snake::direction::RIGHT;
-  else if((direction == "L" || direction == "X") && snake::lastDir != snake::direction::RIGHT) return snake::direction::LEFT;
+       if( ( direction == "U" || direction == "Y" ) && snake::lastDir != snake::direction::DOWN )  return snake::direction::UP;
+  else if( ( direction == "D" || direction == "A" ) && snake::lastDir != snake::direction::UP )    return snake::direction::DOWN;
+  else if( ( direction == "R" || direction == "B" ) && snake::lastDir != snake::direction::LEFT )  return snake::direction::RIGHT;
+  else if( ( direction == "L" || direction == "X" ) && snake::lastDir != snake::direction::RIGHT ) return snake::direction::LEFT;
 
-  return snake::lastDir; // If no valid direction change is found, return the last direction
+  return snake::lastDir;
 }
 
 
@@ -92,9 +97,10 @@ boolean snake::hasEatenFood()
 {
   Segment snake = snake::snake_vec.at( snake::snake_vec.size() - 1 );
 	FoodSegment food = FoodSegment( snake::food_row,snake::food_col );
-  //Serial.print( snake == food );
+
 	return snake == food;
 }
+
 
 void snake::deleteEndOfSnake()
 {
@@ -113,5 +119,37 @@ void snake::deleteEndOfSnake()
 	snake::snake_vec.remove( 0 ); 
 }
 
-bool snake::hasWon(){ return false; }
-bool snake::hasLost(){ return false; }
+
+bool snake::hasWon()
+{
+  bool space = false;
+
+  for( uint8_t i = 0; i < leds::SIZE; i++ )
+  {
+    	if( snake::board[ i ] == ' ' )
+      {
+        space = true;
+        break;
+      }
+  }
+
+  return !space;
+}
+ 
+
+bool snake::hasLost()
+{ 
+  Segment segment = snake::snake_vec.at( snake::snake_vec.size() - 1 );
+
+  if( segment.getRow() < 0 || 
+		  segment.getRow() > leds::HEIGHT - 1 || 
+		  segment.getCol() < 0 ||
+		  segment.getCol() > leds::WIDTH - 1 ) return true;
+
+  for( uint8_t i = 0; i < snake::snake_vec.size() - 1; i++ )
+	{
+		Segment current = snake::snake_vec[ i ];
+		if( current == segment ) return true;
+	}
+  return false; 
+}

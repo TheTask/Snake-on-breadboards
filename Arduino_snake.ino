@@ -6,14 +6,14 @@
 volatile char lastChar = 0;
 
 uint64_t previousMillis = 0; 
-const uint32_t interval = 1000 / config::getGameConfig().UPDATES_PER_SECOND;
+uint32_t updateTimeDelta = 1000 / config::getGameConfig().UPDATES_PER_SECOND;
 
 void setup() 
 {
   randomSeed( analogRead( 0 ) );
   Serial.begin( 115200 );
 
-  config::setDifficulty( config::difficulty::HARD );
+  config::setDifficulty( config::difficulty::MEDIUM );
 
   leds::init();
 
@@ -33,7 +33,7 @@ void loop()
 
   uint64_t currentMillis = millis();
 
-  if( currentMillis - previousMillis >= interval ) 
+  if( currentMillis - previousMillis >= updateTimeDelta ) 
   {
     previousMillis = currentMillis;
 
@@ -41,17 +41,13 @@ void loop()
     snake::move( snake::lastDir);
 
     if( snake::hasWon() ) {}
-    if( snake::hasLost() ) {}
+    if( snake::hasLost() ) softwareReset();
   }
 
   if( lastChar != 0 ) 
   {
     String direction = String( lastChar );
     snake::direction newDir = snake::str2dir( direction );
-    if( newDir != snake::lastDir )
-    {
-      Serial.print( newDir );
-    }
     snake::lastDir = newDir;
     
     lastChar = 0; 
@@ -76,6 +72,6 @@ void serialEvent()
 
 void softwareReset() 
 {
-  wdt_enable( WDTO_15MS ); // Enable the watchdog with the shortest time-out
-  while (true) {} // Wait for the watchdog to reset the microcontroller
+  wdt_enable( WDTO_15MS );
+  while( true ) {} 
 }
