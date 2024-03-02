@@ -11,7 +11,11 @@ class Segment
 
   public:
     Segment(){}
-	  Segment( uint8_t row,uint8_t col ) : _row(row), _col(col) {}
+	  Segment( uint8_t row,uint8_t col ) 
+      : 
+      _row( row ), 
+      _col( col ) 
+      {}
 
     inline uint8_t getRow() const { return this->_row; }
     inline uint8_t getCol() const { return this->_col; }

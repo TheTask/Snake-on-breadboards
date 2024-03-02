@@ -6,7 +6,6 @@
 #include "sequences.h"
 
 volatile char lastButtonPress = 0;
-
 uint64_t previousMillis = 0; 
 
 void setup() 
@@ -29,8 +28,9 @@ void loop()
   if( !sequence::isStartupSequenceDone ) sequence::startupSequence();
 
   uint64_t currentMillis = millis();
+  bool updateGameState = currentMillis - previousMillis >= config::getGameConfig().UPDATE_DELAY;
 
-  if( currentMillis - previousMillis >= config::getGameConfig().UPDATE_DELAY ) 
+  if( updateGameState ) 
   {
     previousMillis = currentMillis;
 
@@ -40,6 +40,7 @@ void loop()
       snake::snake_vec.push_back( segment );
       snake::initFood();
     }
+    
     snake::move();
 
     if( snake::hasWon() ) {}
@@ -69,7 +70,7 @@ void serialEvent()
     char inChar = (char)Serial.read();
 
     // Filter out non-directional characters
-    for( uint8_t i = 0; i < 8; i++ ) 
+    for( uint8_t i = 0; i < sizeof( allowedChars ) / sizeof( allowedChars[ 0 ] ); i++ ) 
     {
       if( inChar == allowedChars[ i ] )  { lastButtonPress = inChar; break;  }
     }

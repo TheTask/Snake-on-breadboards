@@ -18,12 +18,8 @@ namespace config
     }
 
     inline _difficulty = difficulty::EASY;
-
-    inline setDifficulty( config::difficulty difficulty )
-    {
-      _difficulty = difficulty;
-    }
-
+    inline void setDifficulty( config::difficulty difficulty ){ _difficulty = difficulty; }
+    
     struct gameConfig 
     {
       const uint32_t SNAKE_COLOR;
@@ -31,11 +27,11 @@ namespace config
       const uint64_t UPDATE_DELAY;
 
       gameConfig( uint32_t snakeColor,uint32_t borderColor,uint64_t updateDelay )
-          : 
-          SNAKE_COLOR( snakeColor ),
-          BORDER_COLOR( borderColor ),
-          UPDATE_DELAY( updateDelay )
-          {}
+        : 
+        SNAKE_COLOR( snakeColor ),
+        BORDER_COLOR( borderColor ),
+        UPDATE_DELAY( updateDelay )
+        {}
     };
 
     inline gameConfig getGameConfig() 
@@ -51,5 +47,6 @@ namespace config
         }
     }
 }
+
 
 #endif 

@@ -101,10 +101,10 @@ void snake::enqueueDirection( String direction )
 
 boolean snake::hasEatenFood()
 {
-  Segment snake = snake::snake_vec.at( snake::snake_vec.size() - 1 );
+  Segment head = snake::snake_vec.back();
 	FoodSegment food = FoodSegment( snake::food_row,snake::food_col );
 
-	return snake == food;
+	return head == food;
 }
 
 
@@ -141,15 +141,13 @@ bool snake::hasWon()
 
 bool snake::hasLost()
 { 
-  Segment segment = snake::snake_vec.at( snake::snake_vec.size() - 1 );
+  Segment head = snake::snake_vec.back();
 
-  if( segment.getRow() > leds::HEIGHT - 1 || 
-		  segment.getCol() > leds::WIDTH - 1 ) return true;
+  if( head.getRow() > leds::HEIGHT - 1 || head.getCol() > leds::WIDTH - 1 ) return true;
 
   for( uint8_t i = 0; i < snake::snake_vec.size() - 1; i++ )
 	{
-		Segment current = snake::snake_vec[ i ];
-		if( current == segment ) return true;
+		if( head == snake::snake_vec[ i ] ) return true;
 	}
   return false; 
 }
