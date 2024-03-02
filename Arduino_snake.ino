@@ -2,6 +2,8 @@
 #include "leds.h"
 #include "colors.h"
 #include "snake.h"
+#include "digits.h"
+#include "sequences.h"
 
 volatile char lastChar = 0;
 
@@ -24,6 +26,8 @@ void setup()
 
 void loop() 
 {
+  if( !sequence::isStartupSequenceDone ) sequence::startupSequence();
+
   if( snake::hasEatenFood() ) 
   {
     FoodSegment segment = FoodSegment( snake::food_row,snake::food_col );
@@ -41,7 +45,11 @@ void loop()
     snake::move( snake::lastDir);
 
     if( snake::hasWon() ) {}
-    if( snake::hasLost() ) softwareReset();
+    if( snake::hasLost() )
+    {
+      sequence::gameoverSequence();
+      softwareReset();
+    }
   }
 
   if( lastChar != 0 ) 
@@ -52,6 +60,7 @@ void loop()
     
     lastChar = 0; 
   }
+  
 }
 
 void serialEvent() 

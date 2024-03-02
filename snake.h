@@ -5,17 +5,17 @@
 #include "leds.h"
 #include <Vector.h>
 
-const int VECTOR_MAX_ELEMENTS = 200;
-extern int storage_array[];
+#define VECTOR_MAX_ELEMENTS 200
 
 
 namespace snake
 {
-  extern Vector< Segment > snake_vec;
-  extern uint8_t board[];
+  inline Segment _storage[ VECTOR_MAX_ELEMENTS ];
+  inline Vector< Segment > snake_vec( _storage );
+  inline uint8_t board[ leds::SIZE ];
 
-  extern uint8_t food_row;
-  extern uint8_t food_col;
+  inline uint8_t food_row;
+  inline uint8_t food_col;
 
   enum direction
   {
@@ -25,14 +25,13 @@ namespace snake
     RIGHT
   }
 
-  inline lastDir = snake::direction::DOWN;
+  inline lastDir = snake::direction::RIGHT;
+  snake::direction str2dir( String direction );
   
-
   void initBoard();
   void initSnake();
   void initFood();
   void move( snake::direction lastDir );
-  snake::direction str2dir( String direction );
 
   boolean hasEatenFood();
   void deleteEndOfSnake();

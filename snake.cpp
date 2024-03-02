@@ -1,16 +1,5 @@
 #include "snake.h"
 
-
-uint8_t snake::board[ leds::SIZE ];
-
-Segment storage[ VECTOR_MAX_ELEMENTS ];
-Vector<Segment> snake::snake_vec( storage );
-
-uint8_t snake::food_row;
-uint8_t snake::food_col;
-
-
-
 void snake::initBoard()
 {
 	for( uint8_t row = 0; row < leds::HEIGHT; row++ )
