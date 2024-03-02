@@ -12,7 +12,7 @@ Adafruit_NeoPixel leds::_leds(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
 void leds::init()
 {
     _leds.begin(); 
-    _leds.setBrightness(config::BOARD_BRIGHTNESS);
+    _leds.setBrightness( config::BOARD_BRIGHTNESS );
     leds::clear();
 }
 

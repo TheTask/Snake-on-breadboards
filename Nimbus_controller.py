@@ -24,10 +24,10 @@ button_map = {
     10: "L2",
     11: "R2",
     12: "JOYSTICK",
-    13: "LEFT_JOYSTICK",
-    14: "LEFT_JOYSTICK",
-    15: "RIGHT_JOYSTICK",
-    16: "RIGHT_JOYSTICK"
+    13: "JOYSTICK_LEFT",
+    14: "JOYSTICK_LEFT",
+    15: "JOYSTICK_RIGHT",
+    16: "JOYSTICK_RIGHT"
 }
 
 # Initialize the last known state storage for each button press
@@ -36,44 +36,46 @@ last_button_pressed = -1  # Initialize with a value that won't match any button
 last_press_time = 0
 debounce_time = 0.2  # 200 milliseconds
 
-try:
-    arduino = serial.Serial(arduino_port, baud_rate, timeout=1)
-    hid_device.open(nimbus_vendor_id, nimbus_product_id)
-    print("Joystick connected!")
+while(True):
+    try:
+        arduino = serial.Serial(arduino_port, baud_rate, timeout=1)
+        hid_device.open(nimbus_vendor_id, nimbus_product_id)
+        print("Joystick connected!")
 
-    while True:
-        # Read the current state
-        current_state = hid_device.read(64)
+        while True:
+            # Read the current state
+            current_state = hid_device.read(64)
 
-        # Skip all lines of data that are empty
-        all_zeros = True
-        for i in range(len(current_state)):
-            if current_state[i] != 0:
-                button_pressed = i
-                all_zeros = False
-                break
+            # Skip all lines of data that are empty
+            all_zeros = True
+            for i in range(len(current_state)):
+                if current_state[i] != 0:
+                    button_pressed = i
+                    all_zeros = False
+                    break
 
-        if all_zeros:
-            continue
+            if all_zeros:
+                continue
 
-        current_time = time.time()
+            current_time = time.time()
 
-        # Debounce button presses
-        if button_pressed == last_button_pressed and (current_time - last_press_time) < debounce_time:
-            continue
-        else:
-            last_button_pressed = button_pressed
-            last_press_time = current_time
+            # Debounce button presses
+            if button_pressed == last_button_pressed and (current_time - last_press_time) < debounce_time:
+                continue
+            else:
+                last_button_pressed = button_pressed
+                last_press_time = current_time
 
-        print(button_map[button_pressed])
+            print(button_map[button_pressed])
 
-        # Send to Arduino on Serial
-        if "DPAD" in button_map[button_pressed]:
-            arduino.write(f"{button_map[button_pressed][5]}\n".encode())
-        else:
-            arduino.write(f"{button_map[button_pressed]}\n".encode())
+            if( button_pressed <= 7 ):
+                # Send to Arduino on Serial, don't encode back buttons and joysticks
+                if "DPAD" in button_map[button_pressed]:
+                    arduino.write(f"{button_map[button_pressed][5]}\n".encode())
+                else:
+                    arduino.write(f"{button_map[button_pressed][0]}\n".encode())
 
-except Exception as e:
-    hid_device.close()
-    print("Joystick not connected. Retrying in 10s...")
-    time.sleep(10)
+    except Exception as e:
+        hid_device.close()
+        print("Joystick not connected. Retrying in 10s...")
+        time.sleep(10)

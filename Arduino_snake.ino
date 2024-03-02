@@ -5,10 +5,9 @@
 #include "digits.h"
 #include "sequences.h"
 
-volatile char lastChar = 0;
+volatile char lastButtonPress = 0;
 
 uint64_t previousMillis = 0; 
-uint32_t updateTimeDelta = 1000 / config::getGameConfig().UPDATES_PER_SECOND;
 
 void setup() 
 {
@@ -24,25 +23,24 @@ void setup()
   snake::initFood();
 }
 
+
 void loop() 
 {
   if( !sequence::isStartupSequenceDone ) sequence::startupSequence();
 
-  if( snake::hasEatenFood() ) 
-  {
-    FoodSegment segment = FoodSegment( snake::food_row,snake::food_col );
-    snake::snake_vec.push_back( segment );
-    snake::initFood();
-  }
-
   uint64_t currentMillis = millis();
 
-  if( currentMillis - previousMillis >= updateTimeDelta ) 
+  if( currentMillis - previousMillis >= config::getGameConfig().UPDATE_DELAY ) 
   {
     previousMillis = currentMillis;
 
-    leds::display( snake::board);
-    snake::move( snake::lastDir);
+    if( snake::hasEatenFood() ) 
+    {
+      FoodSegment segment = FoodSegment( snake::food_row,snake::food_col );
+      snake::snake_vec.push_back( segment );
+      snake::initFood();
+    }
+    snake::move();
 
     if( snake::hasWon() ) {}
     if( snake::hasLost() )
@@ -50,18 +48,17 @@ void loop()
       sequence::gameoverSequence();
       softwareReset();
     }
+
+    leds::display( snake::board );
   }
 
-  if( lastChar != 0 ) 
+  if( lastButtonPress != 0 ) 
   {
-    String direction = String( lastChar );
-    snake::direction newDir = snake::str2dir( direction );
-    snake::lastDir = newDir;
-    
-    lastChar = 0; 
+    snake::enqueueDirection( String( lastButtonPress ) );
+    lastButtonPress = 0;
   }
-  
 }
+
 
 void serialEvent() 
 {
@@ -72,9 +69,9 @@ void serialEvent()
     char inChar = (char)Serial.read();
 
     // Filter out non-directional characters
-    for( uint8_t i = 0; i < sizeof( allowedChars ) / sizeof( allowedChars[ 0 ] ); i++ ) 
+    for( uint8_t i = 0; i < 8; i++ ) 
     {
-      if( inChar == allowedChars[ i ] )  { lastChar = inChar; break;  }
+      if( inChar == allowedChars[ i ] )  { lastButtonPress = inChar; break;  }
     }
   }
 }

@@ -31,7 +31,7 @@ void sequence::gameoverSequence()
   _movePixelRight( 6,currentPixelIndex );
 
   
-  for( int i = 0; i < initWidth / 2; i++ )
+  for( int i = 0; i < leds::WIDTH / 2; i++ )
   {
     _movePixelDown( initHeight--,currentPixelIndex );
     _movePixelLeft( initWidth--,currentPixelIndex );

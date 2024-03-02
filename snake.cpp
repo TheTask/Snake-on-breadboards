@@ -7,13 +7,9 @@ void snake::initBoard()
 		for( uint8_t col = 0; col < leds::WIDTH; col++ )
 		{
       if( row == 0 || row == leds::HEIGHT - 1 || col == 0 || col == leds::WIDTH - 1 )
-      {
         snake::board[ row * leds::WIDTH + col ] = '/'; //border
-      }
       else
-      {
         snake::board[ row * leds::WIDTH + col ] = ' ';
-      }
 		}
 	}
 }
@@ -42,43 +38,64 @@ void snake::initFood()
   }
 
 	snake::board[ snake::food_row * leds::WIDTH + snake::food_col  ] = 'X';
+  leds::display( snake::board );
 }
 
 
-void snake::move( snake::direction lastDir )
-{ 
-  Segment segment = snake::snake_vec.at( snake::snake_vec.size() - 1 );
-
-  switch( lastDir )
+void snake::move() 
+{
+  if( !snake::directionQueue.isEmpty() ) 
   {
-    case snake::direction::DOWN:
-      segment.incRow();
-      break;
-    case snake::direction::LEFT:
-      segment.decCol();
-      break;
-    case snake::direction::UP:
-      segment.decRow();
-      break;
-    case snake::direction::RIGHT:
-      segment.incCol();
-      break;
+      int8_t nextDirInt;
+      snake::directionQueue.pop( &nextDirInt );
+
+      snake::direction nextDir = static_cast< snake::direction >( nextDirInt );
+      snake::lastDir = nextDir;
   }
 
-  snake::snake_vec.push_back( segment );
-  snake::board[ segment.getRow() * leds::WIDTH + segment.getCol() ] = 'O';
+  Segment head = snake::snake_vec.back();
+
+  switch( snake::lastDir ) 
+  {
+      case snake::direction::UP:
+          head.decRow();
+          break;
+      case snake::direction::DOWN:
+          head.incRow();
+          break;
+      case snake::direction::LEFT:
+          head.decCol();
+          break;
+      case snake::direction::RIGHT:
+          head.incCol();
+          break;
+  }
+
+  snake::snake_vec.push_back( head );
+  snake::board[ head.getRow() * leds::WIDTH + head.getCol() ] = 'O';
   snake::deleteEndOfSnake();
-} 
+}
 
 
-snake::direction snake::str2dir(String direction)
+void snake::enqueueDirection( String direction ) 
 {
-       if( ( direction == "U" || direction == "Y" ) && snake::lastDir != snake::direction::DOWN )  return snake::direction::UP;
-  else if( ( direction == "D" || direction == "A" ) && snake::lastDir != snake::direction::UP )    return snake::direction::DOWN;
-  else if( ( direction == "R" || direction == "B" ) && snake::lastDir != snake::direction::LEFT )  return snake::direction::RIGHT;
-  else if( ( direction == "L" || direction == "X" ) && snake::lastDir != snake::direction::RIGHT ) return snake::direction::LEFT;
+  int8_t dir = -1;
+  snake::direction lastDir;
 
-  return snake::lastDir;
+  if( !snake::directionQueue.isEmpty() ) 
+  {
+    int8_t peekDirInt;
+    snake::directionQueue.peek( &peekDirInt );
+    lastDir = static_cast< snake::direction >( peekDirInt );
+  } 
+  else lastDir = snake::lastDir;
+
+       if( ( direction == "U" || direction == "Y" ) && ( lastDir != snake::direction::DOWN ) )  dir = static_cast< int8_t >( snake::direction::UP );
+  else if( ( direction == "D" || direction == "A" ) && ( lastDir != snake::direction::UP ) )    dir = static_cast< int8_t >( snake::direction::DOWN );
+  else if( ( direction == "R" || direction == "B" ) && ( lastDir != snake::direction::LEFT ) )  dir = static_cast< int8_t >( snake::direction::RIGHT );
+  else if( ( direction == "L" || direction == "X" ) && ( lastDir != snake::direction::RIGHT ) ) dir = static_cast< int8_t >( snake::direction::LEFT );
+
+  if( dir != -1 ) snake::directionQueue.push( &dir );
 }
 
 
@@ -97,13 +114,9 @@ void snake::deleteEndOfSnake()
   uint8_t col = snake::snake_vec[ 0 ].getCol();
 
   if( row == 0 || row == leds::HEIGHT - 1 || col == 0 || col == leds::WIDTH - 1 )
-  {
     snake::board[ row * leds::WIDTH + col ] = '/'; //update back to border if it was a border
-  }
   else
-  {
     snake::board[ row * leds::WIDTH + col ] = ' ';
-  }
 	
 	snake::snake_vec.remove( 0 ); 
 }
@@ -130,9 +143,7 @@ bool snake::hasLost()
 { 
   Segment segment = snake::snake_vec.at( snake::snake_vec.size() - 1 );
 
-  if( segment.getRow() < 0 || 
-		  segment.getRow() > leds::HEIGHT - 1 || 
-		  segment.getCol() < 0 ||
+  if( segment.getRow() > leds::HEIGHT - 1 || 
 		  segment.getCol() > leds::WIDTH - 1 ) return true;
 
   for( uint8_t i = 0; i < snake::snake_vec.size() - 1; i++ )

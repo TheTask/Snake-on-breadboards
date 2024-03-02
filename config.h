@@ -28,13 +28,13 @@ namespace config
     {
       const uint32_t SNAKE_COLOR;
       const uint32_t BORDER_COLOR;
-      const uint8_t  UPDATES_PER_SECOND;
+      const uint64_t UPDATE_DELAY;
 
-      gameConfig( uint32_t snakeColor,uint32_t borderColor,uint8_t updatesPerSecond )
+      gameConfig( uint32_t snakeColor,uint32_t borderColor,uint64_t updateDelay )
           : 
           SNAKE_COLOR( snakeColor ),
           BORDER_COLOR( borderColor ),
-          UPDATES_PER_SECOND( updatesPerSecond )
+          UPDATE_DELAY( updateDelay )
           {}
     };
 
@@ -43,11 +43,11 @@ namespace config
         switch( _difficulty ) 
         {
             case EASY:
-                return gameConfig( colors::GREEN,colors::LIGHT_BLUE | colors::LIGHT_RED,3 ); 
+                return gameConfig( colors::GREEN,colors::LIGHT_BLUE | colors::LIGHT_RED,300 ); 
             case MEDIUM:
-                return gameConfig( colors::BLUE,colors::LIGHT_GREEN | colors::LIGHT_RED,5 ); 
+                return gameConfig( colors::BLUE,colors::LIGHT_GREEN | colors::LIGHT_RED,200 ); 
             case HARD:
-                return gameConfig( colors::RED,colors::LIGHT_BLUE | colors::LIGHT_GREEN,8 ); 
+                return gameConfig( colors::RED,colors::LIGHT_BLUE | colors::LIGHT_GREEN,100 ); 
         }
     }
 }
