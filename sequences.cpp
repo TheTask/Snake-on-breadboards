@@ -31,7 +31,7 @@ void sequence::gameoverSequence()
   //draws a basic spiral on top of existing image
   _movePixelRight( leds::WIDTH,currentPixelIndex );
 
-  for( int i = 0; i < leds::WIDTH / 2; i++ )
+  for( uint8_t i = 0; i < leds::WIDTH / 2; i++ )
   {
     _movePixelDown( initHeight--,currentPixelIndex );
     _movePixelLeft( initWidth--,currentPixelIndex );
@@ -50,7 +50,7 @@ void sequence::_movePixelRight( uint8_t numPixels,uint8_t* currentPixelIndex )
   {
     leds::displayPixel( *currentPixelIndex,colors::RED );
     (*currentPixelIndex)++;
-    delay( delay_ms );
+    delay( _delay_ms );
   }
   (*currentPixelIndex)--;
 }
@@ -61,7 +61,7 @@ void sequence::_movePixelDown( uint8_t numPixels,uint8_t* currentPixelIndex )
   {
     leds::displayPixel( *currentPixelIndex,colors::RED );
     (*currentPixelIndex)+= leds::WIDTH;
-    delay( delay_ms );
+    delay( _delay_ms );
   }
   (*currentPixelIndex)-= leds::WIDTH;
 }
@@ -72,7 +72,7 @@ void sequence::_movePixelLeft( uint8_t numPixels,uint8_t* currentPixelIndex )
   {
     leds::displayPixel( *currentPixelIndex,colors::RED );
     (*currentPixelIndex)--;
-    delay( delay_ms );
+    delay( _delay_ms );
   }
   (*currentPixelIndex)++;
 }
@@ -82,7 +82,7 @@ void sequence::_movePixelUp( uint8_t numPixels,uint8_t* currentPixelIndex )
   {
     leds::displayPixel( *currentPixelIndex,colors::RED );
     *currentPixelIndex -= leds::WIDTH;
-    delay( delay_ms );
+    delay( _delay_ms );
   }
   (*currentPixelIndex)+= leds::WIDTH;
 }
