@@ -79,8 +79,6 @@ void snake::move()
 
 void snake::enqueueDirection( String direction ) 
 {
-  if( !flags::canProcessInput ) return;
-
   int8_t dir = -1;
   snake::direction lastDir;
 
@@ -99,12 +97,6 @@ void snake::enqueueDirection( String direction )
 
   if( dir != -1 ) snake::_directionQueue.push( &dir );
 }
-
-void snake::flushDirectionQueue()
-{
-  snake::_directionQueue.flush();
-}
-
 
 boolean snake::hasEatenFood()
 {

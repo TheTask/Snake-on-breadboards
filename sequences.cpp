@@ -1,76 +1,55 @@
 #include "sequences.h"
 
-/*
-void sequence::startupSequence()
-{
-  leds::clear();
-
-  leds::displayDigit( digits::digit_3,colors::RED );
-  delay( 1000 );
-  leds::clear();
-
-  leds::displayDigit( digits::digit_2,colors::RED );
-  delay( 1000 );
-  leds::clear();
-
-  leds::displayDigit( digits::digit_1,colors::RED );
-  delay( 1000 );
-  leds::clear();
-  
-  snake::flushDirectionQueue();
-  flags::canProcessInput = true;
-  sequence::isStartupSequenceDone = true;
-}
-*/
 void sequence::startupSequence() 
 {
-    unsigned long currentMillis = millis();
+  uint64_t currentMillis = millis();
 
-    switch (sequence::currentState) {
-        case sequence::startupState::INIT:
-            leds::clear();
-            sequence::previousMillis = currentMillis;
-            sequence::currentState = sequence::startupState::SHOW_DIGIT_3;
-            break;
+  switch( sequence::currentState ) 
+  {
+    case sequence::startupState::INIT:
+      leds::clear();
+      sequence::previousMillis = currentMillis;
+      sequence::currentState = sequence::startupState::SHOW_DIGIT_3;
+      break;
 
-        case sequence::startupState::SHOW_DIGIT_3:
-            if (currentMillis - sequence::previousMillis >= sequence::interval) {
-                leds::displayDigit(digits::digit_3, colors::RED);
-                sequence::currentState = sequence::startupState::SHOW_DIGIT_2;
-                sequence::previousMillis = currentMillis;
-            }
-            break;
+    case sequence::startupState::SHOW_DIGIT_3:
+      if( currentMillis - sequence::previousMillis >= sequence::delayBetweenDigets ) 
+      {
+        leds::displayDigit( digits::digit_3, colors::RED );
+        sequence::currentState = sequence::startupState::SHOW_DIGIT_2;
+        sequence::previousMillis = currentMillis;
+      }
+      break;
 
-        case sequence::startupState::SHOW_DIGIT_2:
-            if (currentMillis - sequence::previousMillis >= sequence::interval) 
-            {
-                leds::clear();
-                leds::displayDigit(digits::digit_2, colors::RED);
-                sequence::currentState = sequence::startupState::SHOW_DIGIT_1;
-                sequence::previousMillis = currentMillis;
-            }
-            break;
+    case sequence::startupState::SHOW_DIGIT_2:
+      if( currentMillis - sequence::previousMillis >= sequence::delayBetweenDigets ) 
+      {
+        leds::clear();
+        leds::displayDigit( digits::digit_2,colors::RED );
+        sequence::currentState = sequence::startupState::SHOW_DIGIT_1;
+        sequence::previousMillis = currentMillis;
+      }
+      break;
 
-        case sequence::startupState::SHOW_DIGIT_1:
-            if (currentMillis - sequence::previousMillis >= sequence::interval) {
-                leds::clear();
-                leds::displayDigit(digits::digit_1, colors::RED);
-                sequence::currentState = sequence::startupState::DONE;
-                sequence::previousMillis = currentMillis;
-            }
-            break;
+    case sequence::startupState::SHOW_DIGIT_1:
+      if( currentMillis - sequence::previousMillis >= sequence::delayBetweenDigets ) 
+      {
+        leds::clear();
+        leds::displayDigit( digits::digit_1,colors::RED );
+        sequence::currentState = sequence::startupState::DONE;
+        sequence::previousMillis = currentMillis;
+      }
+      break;
 
-        case sequence::startupState::DONE:
-            if (currentMillis - sequence::previousMillis >= sequence::interval) 
-            {
-                leds::clear();
-                // isStartupSequenceDone = true; // Set this flag true if needed in your logic
-                flags::canProcessInput = true; // Enable input processing
-                // Reset or prepare for the next time startupSequence needs to run
-                sequence::isStartupSequenceDone = true;
-            }
-            break;
-    }
+    case sequence::startupState::DONE:
+      if( currentMillis - sequence::previousMillis >= sequence::delayBetweenDigets ) 
+      {
+        leds::clear();
+        flags::canProcessInput = true; 
+        sequence::isStartupSequenceDone = true;
+      }
+      break;
+  }
 }
 
 void sequence::gameoverSequence()

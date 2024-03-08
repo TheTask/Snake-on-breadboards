@@ -7,14 +7,13 @@
 
 volatile char lastButtonPress = 0;
 uint64_t previousMillis = 0; 
-bool canProcessInput = false;
 
 void setup() 
 {
   randomSeed( analogRead( 0 ) );
   Serial.begin( 115200 );
 
-      config::setDifficulty( config::difficulty::EASY );
+  config::setDifficulty( config::difficulty::EASY );
 
   leds::init();
 
@@ -22,54 +21,47 @@ void setup()
   snake::initSnake();
   snake::initFood();
 
-  flags::canProcessInput = false; // Initially, don't process input
+  flags::canProcessInput = false; 
 }
 
 
 void loop() 
 {
-  if( !sequence::isStartupSequenceDone )
-  {
-    sequence::startupSequence();
-    snake::flushDirectionQueue();
-    Serial.flush();
-  } 
+  if( !sequence::isStartupSequenceDone ) sequence::startupSequence();
 
   if( flags::canProcessInput )
-  
-{
-
-  uint64_t currentMillis = millis();
-  bool updateGameState = currentMillis - previousMillis >= config::getGameConfig().UPDATE_DELAY;
-
-  if( updateGameState ) 
   {
-    previousMillis = currentMillis;
+    uint64_t currentMillis = millis();
+    bool updateGameState = currentMillis - previousMillis >= config::getGameConfig().UPDATE_DELAY;
 
-    if( snake::hasEatenFood() ) 
+    if( updateGameState ) 
     {
-      FoodSegment segment = FoodSegment( snake::food_row,snake::food_col );
-      snake::snake_vec.push_back( segment );
-      snake::initFood();
-    }
-    
-    snake::move();
+      previousMillis = currentMillis;
 
-    if( snake::hasWon() ) {}
-    if( snake::hasLost() )
+      if( snake::hasEatenFood() ) 
+      {
+        FoodSegment segment = FoodSegment( snake::food_row,snake::food_col );
+        snake::snake_vec.push_back( segment );
+        snake::initFood();
+      }
+      
+      snake::move();
+
+      if( snake::hasWon() ) {}
+      if( snake::hasLost() )
+      {
+        sequence::gameoverSequence();
+        softwareReset();
+      }
+
+      leds::display( snake::board );
+    }
+
+    if( lastButtonPress != 0 ) 
     {
-      sequence::gameoverSequence();
-      softwareReset();
+      snake::enqueueDirection( String( lastButtonPress ) );
+      lastButtonPress = 0;
     }
-
-    leds::display( snake::board );
-  }
-
-  if( lastButtonPress != 0 ) 
-  {
-    snake::enqueueDirection( String( lastButtonPress ) );
-    lastButtonPress = 0;
-  }
   }
 }
 
@@ -85,7 +77,7 @@ void serialEvent()
     // Filter out non-directional characters
     for( uint8_t i = 0; i < sizeof( allowedChars ) / sizeof( allowedChars[ 0 ] ); i++ ) 
     {
-      if( inChar == allowedChars[ i ] )  { lastButtonPress = inChar; break;  }
+      if( inChar == allowedChars[ i ] && flags::canProcessInput )  { lastButtonPress = inChar; break;  }
     }
   }
 }

@@ -30,7 +30,6 @@ namespace snake
   inline uint8_t food_col;
 
   void enqueueDirection( String direction );
-  void flushDirectionQueue();
   
   void initBoard();
   void initSnake();

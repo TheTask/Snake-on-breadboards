@@ -9,22 +9,21 @@
 
 namespace sequence
 {
-  inline volatile bool isStartupSequenceDone = false;
-  void startupSequence();
-
-  enum startupState {
-        INIT,
-        SHOW_DIGIT_3,
-        SHOW_DIGIT_2,
-        SHOW_DIGIT_1,
-        DONE
-    };
+  enum startupState 
+  {
+    INIT,
+    SHOW_DIGIT_3,
+    SHOW_DIGIT_2,
+    SHOW_DIGIT_1,
+    DONE
+  };
 
   inline startupState currentState = INIT;
-  inline unsigned long previousMillis = 0; // Stores the last time the sequence updated
-  inline const long interval = 1000; // Interval at which to step through the sequence (1 second)
+  inline uint64_t previousMillis = 0; 
+  inline const uint32_t delayBetweenDigets = 1000; 
+  inline volatile bool isStartupSequenceDone = false;
 
-
+  void startupSequence();
   void gameoverSequence();
 
   inline const uint8_t _delay_ms = 15;
