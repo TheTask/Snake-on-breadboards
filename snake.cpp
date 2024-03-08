@@ -44,10 +44,10 @@ void snake::initFood()
 
 void snake::move() 
 {
-  if( !snake::directionQueue.isEmpty() ) 
+  if( !snake::_directionQueue.isEmpty() ) 
   {
       int8_t nextDirInt;
-      snake::directionQueue.pop( &nextDirInt );
+      snake::_directionQueue.pop( &nextDirInt );
 
       snake::direction nextDir = static_cast< snake::direction >( nextDirInt );
       snake::lastDir = nextDir;
@@ -79,13 +79,15 @@ void snake::move()
 
 void snake::enqueueDirection( String direction ) 
 {
+  if( !flags::canProcessInput ) return;
+
   int8_t dir = -1;
   snake::direction lastDir;
 
-  if( !snake::directionQueue.isEmpty() ) 
+  if( !snake::_directionQueue.isEmpty() ) 
   {
     int8_t peekDirInt;
-    snake::directionQueue.peek( &peekDirInt );
+    snake::_directionQueue.peek( &peekDirInt );
     lastDir = static_cast< snake::direction >( peekDirInt );
   } 
   else lastDir = snake::lastDir;
@@ -95,7 +97,12 @@ void snake::enqueueDirection( String direction )
   else if( ( direction == "R" || direction == "B" ) && ( lastDir != snake::direction::LEFT ) )  dir = static_cast< int8_t >( snake::direction::RIGHT );
   else if( ( direction == "L" || direction == "X" ) && ( lastDir != snake::direction::RIGHT ) ) dir = static_cast< int8_t >( snake::direction::LEFT );
 
-  if( dir != -1 ) snake::directionQueue.push( &dir );
+  if( dir != -1 ) snake::_directionQueue.push( &dir );
+}
+
+void snake::flushDirectionQueue()
+{
+  snake::_directionQueue.flush();
 }
 
 

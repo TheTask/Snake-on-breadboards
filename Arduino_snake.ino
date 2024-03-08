@@ -7,25 +7,37 @@
 
 volatile char lastButtonPress = 0;
 uint64_t previousMillis = 0; 
+bool canProcessInput = false;
 
 void setup() 
 {
   randomSeed( analogRead( 0 ) );
   Serial.begin( 115200 );
 
-  config::setDifficulty( config::difficulty::EASY );
+      config::setDifficulty( config::difficulty::EASY );
 
   leds::init();
 
   snake::initBoard();
   snake::initSnake();
   snake::initFood();
+
+  flags::canProcessInput = false; // Initially, don't process input
 }
 
 
 void loop() 
 {
-  if( !sequence::isStartupSequenceDone ) sequence::startupSequence();
+  if( !sequence::isStartupSequenceDone )
+  {
+    sequence::startupSequence();
+    snake::flushDirectionQueue();
+    Serial.flush();
+  } 
+
+  if( flags::canProcessInput )
+  
+{
 
   uint64_t currentMillis = millis();
   bool updateGameState = currentMillis - previousMillis >= config::getGameConfig().UPDATE_DELAY;
@@ -57,6 +69,7 @@ void loop()
   {
     snake::enqueueDirection( String( lastButtonPress ) );
     lastButtonPress = 0;
+  }
   }
 }
 

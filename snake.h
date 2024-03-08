@@ -3,6 +3,7 @@
 
 #include "segment.h"
 #include "leds.h"
+#include "flags.h"
 #include <Vector.h>
 #include <cppQueue.h>
 
@@ -19,7 +20,7 @@ namespace snake
     RIGHT
   }
   inline lastDir = snake::direction::UP;
-  inline cppQueue	directionQueue( sizeof( snake::direction ),5,FIFO );	
+  inline cppQueue	_directionQueue( sizeof( snake::direction ),5,FIFO );	
 
   inline Segment _storage[ VECTOR_MAX_ELEMENTS ];
   inline Vector< Segment > snake_vec( _storage );
@@ -29,6 +30,7 @@ namespace snake
   inline uint8_t food_col;
 
   void enqueueDirection( String direction );
+  void flushDirectionQueue();
   
   void initBoard();
   void initSnake();

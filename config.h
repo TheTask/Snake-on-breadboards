@@ -3,6 +3,7 @@
 
 #include "colors.h"
 
+extern bool canProcessInput;
 
 namespace config 
 {

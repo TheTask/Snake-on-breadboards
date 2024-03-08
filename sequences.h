@@ -4,11 +4,27 @@
 #include "config.h"
 #include "leds.h"
 #include "digits.h"
+#include "flags.h"
+#include "snake.h"
 
 namespace sequence
 {
-  inline bool isStartupSequenceDone = false;
+  inline volatile bool isStartupSequenceDone = false;
   void startupSequence();
+
+  enum startupState {
+        INIT,
+        SHOW_DIGIT_3,
+        SHOW_DIGIT_2,
+        SHOW_DIGIT_1,
+        DONE
+    };
+
+  inline startupState currentState = INIT;
+  inline unsigned long previousMillis = 0; // Stores the last time the sequence updated
+  inline const long interval = 1000; // Interval at which to step through the sequence (1 second)
+
+
   void gameoverSequence();
 
   inline const uint8_t _delay_ms = 15;
