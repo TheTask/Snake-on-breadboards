@@ -3,7 +3,8 @@
 
 namespace flags 
 {
-    extern volatile bool canProcessInput;
+    inline volatile bool canProcessInput;
 }
+
 
 #endif

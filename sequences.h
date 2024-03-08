@@ -18,10 +18,12 @@ namespace sequence
     DONE
   };
 
-  inline startupState currentState = INIT;
-  inline uint64_t previousMillis = 0; 
-  inline const uint32_t delayBetweenDigets = 1000; 
+  inline uint64_t _previousMillis = 0; 
+  inline const uint64_t _oneSecondDelay = 1000; 
+
+  inline startupState currentState = startupState::INIT;
   inline volatile bool isStartupSequenceDone = false;
+
 
   void startupSequence();
   void gameoverSequence();

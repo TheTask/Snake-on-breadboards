@@ -3,46 +3,47 @@
 void sequence::startupSequence() 
 {
   uint64_t currentMillis = millis();
+  bool update = currentMillis - sequence::_previousMillis >= sequence::_oneSecondDelay;
 
   switch( sequence::currentState ) 
   {
     case sequence::startupState::INIT:
       leds::clear();
-      sequence::previousMillis = currentMillis;
+      sequence::_previousMillis = currentMillis;
       sequence::currentState = sequence::startupState::SHOW_DIGIT_3;
       break;
 
     case sequence::startupState::SHOW_DIGIT_3:
-      if( currentMillis - sequence::previousMillis >= sequence::delayBetweenDigets ) 
+      if( update ) 
       {
         leds::displayDigit( digits::digit_3, colors::RED );
         sequence::currentState = sequence::startupState::SHOW_DIGIT_2;
-        sequence::previousMillis = currentMillis;
+        sequence::_previousMillis = currentMillis;
       }
       break;
 
     case sequence::startupState::SHOW_DIGIT_2:
-      if( currentMillis - sequence::previousMillis >= sequence::delayBetweenDigets ) 
+      if( update ) 
       {
         leds::clear();
         leds::displayDigit( digits::digit_2,colors::RED );
         sequence::currentState = sequence::startupState::SHOW_DIGIT_1;
-        sequence::previousMillis = currentMillis;
+        sequence::_previousMillis = currentMillis;
       }
       break;
 
     case sequence::startupState::SHOW_DIGIT_1:
-      if( currentMillis - sequence::previousMillis >= sequence::delayBetweenDigets ) 
+      if( update ) 
       {
         leds::clear();
         leds::displayDigit( digits::digit_1,colors::RED );
         sequence::currentState = sequence::startupState::DONE;
-        sequence::previousMillis = currentMillis;
+        sequence::_previousMillis = currentMillis;
       }
       break;
 
     case sequence::startupState::DONE:
-      if( currentMillis - sequence::previousMillis >= sequence::delayBetweenDigets ) 
+      if( update ) 
       {
         leds::clear();
         flags::canProcessInput = true; 
