@@ -42,10 +42,28 @@ void leds::clear()
 
 void leds::displayDigit( bool* digit,uint32_t color )
 {
-  for( uint8_t i = 0; i < leds::SIZE; i++ )
+  for( uint8_t row = 0; row < leds::HEIGHT; row++ )
   {
-    if( digit[ i ] ) _leds.setPixelColor( i,color );
+    uint8_t col_index = 0;
+
+    for( col_index; col_index < 4; col_index++ )
+    {
+       _leds.setPixelColor( row * leds::WIDTH + col_index,colors::OFF );
+    }
+
+    for( uint8_t col = 0; col < 6; col++ )
+    {
+       if( digit[ row * 6 + col ] ) _leds.setPixelColor( row * leds::WIDTH + col_index,color );
+       col_index++;
+    }
+
+    for( col_index; col_index < 14; col_index++ )
+    {
+       _leds.setPixelColor( row * leds::WIDTH + col_index,colors::OFF );
+    }
   }
+
+  //if( digit[ i ] ) _leds.setPixelColor( i,color );
   _leds.show();
 }
 
