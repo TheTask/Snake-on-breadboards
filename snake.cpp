@@ -109,14 +109,9 @@ boolean snake::hasEatenFood()
 
 void snake::deleteEndOfSnake()
 {
-  uint8_t row = snake::snake_vec[ 0 ].getRow();
-  uint8_t col = snake::snake_vec[ 0 ].getCol();
+  Segment tail = snake::snake_vec[ 0 ];
 
-  if( row == 0 || row == leds::HEIGHT - 1 || col == 0 || col == leds::WIDTH - 1 )
-    snake::board[ row * leds::WIDTH + col ] = '/'; //update back to border if it was a border
-  else
-    snake::board[ row * leds::WIDTH + col ] = ' ';
-	
+  snake::board[ tail.getRow() * leds::WIDTH + tail.getCol() ] = ' ';	
 	snake::snake_vec.remove( 0 ); 
 }
 

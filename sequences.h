@@ -28,7 +28,7 @@ namespace sequence
   void startupSequence();
   void gameoverSequence();
 
-  inline const uint8_t _delay_ms = 10;
+  inline const uint8_t _delay_ms = 5;
   void _movePixelRight( uint8_t numPixels,uint8_t* currentPixelIndex );
   void _movePixelDown(  uint8_t numPixels,uint8_t* currentPixelIndex );
   void _movePixelLeft(  uint8_t numPixels,uint8_t* currentPixelIndex );

@@ -6,7 +6,7 @@
 // Parameter 3 = pixel type flags, add together as needed:
 //   NEO_KHZ800  800 KHz bitstream (most NeoPixel products w/WS2812 LEDs)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
-Adafruit_NeoPixel leds::_leds(NUM_LEDS, LED_PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel leds::_leds( NUM_LEDS,LED_PIN,NEO_GRB + NEO_KHZ800 );
 
 
 void leds::init()
@@ -32,7 +32,7 @@ void leds::display( uint8_t* board )
 
 void leds::clear()
 {
-  for( uint32_t i = 0; i < leds::SIZE; i++ )
+  for( uint8_t i = 0; i < leds::SIZE; i++ )
   {
     _leds.setPixelColor( i,colors::OFF );
   }
@@ -63,7 +63,6 @@ void leds::displayDigit( bool* digit,uint32_t color )
     }
   }
 
-  //if( digit[ i ] ) _leds.setPixelColor( i,color );
   _leds.show();
 }
 

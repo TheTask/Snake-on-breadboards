@@ -17,7 +17,7 @@ namespace digits
     0,0,0,1,0,0,
     0,0,0,1,0,0,
     0,0,0,1,0,0,
-    1,1,1,1,1,1
+    0,1,1,1,1,1
   };
 
   static const bool digit_2[ 84 ] = 
@@ -57,5 +57,6 @@ namespace digits
   };
 
 }
+
 
 #endif

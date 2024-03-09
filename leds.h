@@ -1,5 +1,5 @@
-#ifndef SNAKE_GAME_H
-#define SNAKE_GAME_H
+#ifndef LEDS_H
+#define LEDS_H
 
 #include <Adafruit_NeoPixel.h>
 #include "config.h"

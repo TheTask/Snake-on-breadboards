@@ -13,7 +13,7 @@ void setup()
   randomSeed( analogRead( 0 ) );
   Serial.begin( 115200 );
 
-  config::setDifficulty( config::difficulty::HARD );
+  config::setDifficulty( config::difficulty::MEDIUM );
 
   leds::init();
 
@@ -53,8 +53,7 @@ void loop()
         sequence::gameoverSequence();
         softwareReset();
       }
-
-      leds::display( snake::board );
+      else leds::display( snake::board );
     }
 
     if( lastButtonPress != 0 ) 

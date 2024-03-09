@@ -72,7 +72,7 @@ void sequence::gameoverSequence()
     _movePixelRight( initWidth--,currentPixelIndex );
   }
   
-  delay( 3000 );
+  delay( 2000 );
   leds::clear();
 }
 

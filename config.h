@@ -40,11 +40,11 @@ namespace config
         switch( _difficulty ) 
         {
             case EASY:
-                return gameConfig( colors::GREEN,colors::LIGHT_BLUE | colors::LIGHT_RED,300 ); 
+                return gameConfig( colors::GREEN,colors::MAGENTA,300 ); 
             case MEDIUM:
-                return gameConfig( colors::BLUE,colors::LIGHT_GREEN | colors::LIGHT_RED,200 ); 
+                return gameConfig( colors::BLUE,colors::YELLOW,200 ); 
             case HARD:
-                return gameConfig( colors::RED,colors::LIGHT_BLUE | colors::LIGHT_GREEN,100 ); 
+                return gameConfig( colors::RED,colors::CYAN,100 ); 
         }
     }
 }
