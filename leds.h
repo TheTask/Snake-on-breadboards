@@ -5,11 +5,11 @@
 #include "config.h"
 
 #define LED_PIN     13 
-#define NUM_LEDS    100  
+#define NUM_LEDS    196  
 
 namespace leds
 {
-  const uint8_t WIDTH = 6;
+  const uint8_t WIDTH = 14;
   const uint8_t HEIGHT = 14;
 
   const uint8_t SIZE = WIDTH * HEIGHT;

@@ -3,7 +3,7 @@
 
 namespace digits
 {
-  inline bool digit_1[ 84 ] = 
+  static const bool digit_1[ 84 ] = 
   { 0,0,0,1,0,0, 
     0,0,0,1,0,0,
     0,0,1,1,0,0,
@@ -20,7 +20,7 @@ namespace digits
     1,1,1,1,1,1
   };
 
-  inline bool digit_2[ 84 ] = 
+  static const bool digit_2[ 84 ] = 
   {
     0,1,1,1,1,0,
     1,0,0,0,0,1,
@@ -38,7 +38,7 @@ namespace digits
     1,1,1,1,1,1
   };
 
-  inline bool digit_3[ 84 ] = 
+  static const bool digit_3[ 84 ] = 
   {
     0,1,1,1,1,0,
     1,0,0,0,0,1,

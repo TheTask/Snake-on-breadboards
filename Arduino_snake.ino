@@ -13,7 +13,7 @@ void setup()
   randomSeed( analogRead( 0 ) );
   Serial.begin( 115200 );
 
-  config::setDifficulty( config::difficulty::EASY );
+  config::setDifficulty( config::difficulty::HARD );
 
   leds::init();
 

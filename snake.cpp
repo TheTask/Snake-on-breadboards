@@ -142,7 +142,7 @@ bool snake::hasLost()
 { 
   Segment head = snake::snake_vec.back();
 
-  if( head.getRow() > leds::HEIGHT - 1 || head.getCol() > leds::WIDTH - 1 ) return true;
+  if( head.getRow() > leds::HEIGHT - 2 || head.getCol() > leds::WIDTH - 2 ||  head.getRow() == 0 || head.getCol() == 0 ) return true;
 
   for( uint8_t i = 0; i < snake::snake_vec.size() - 1; i++ )
 	{
