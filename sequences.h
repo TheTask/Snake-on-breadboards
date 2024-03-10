@@ -19,7 +19,7 @@ namespace sequence
   };
 
   inline uint64_t _previousMillis = 0; 
-  inline const uint64_t _oneSecondDelay = 1000; 
+  static const uint64_t _oneSecondDelay = 1000; 
 
   inline startupState currentState = startupState::INIT;
   inline volatile bool isStartupSequenceDone = false;
@@ -28,7 +28,7 @@ namespace sequence
   void startupSequence();
   void gameoverSequence();
 
-  inline const uint8_t _delay_ms = 5;
+  static const uint8_t _delay_ms = 5;
   void _movePixelRight( uint8_t numPixels,uint8_t* currentPixelIndex );
   void _movePixelDown(  uint8_t numPixels,uint8_t* currentPixelIndex );
   void _movePixelLeft(  uint8_t numPixels,uint8_t* currentPixelIndex );

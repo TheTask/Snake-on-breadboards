@@ -7,6 +7,7 @@
 
 volatile char lastButtonPress = 0;
 uint64_t previousMillis = 0; 
+static const char allowedChars[] = { 'U','D','L','R','Y','A','B','X' };
 
 void setup() 
 {
@@ -67,8 +68,6 @@ void loop()
 
 void serialEvent() 
 {
-  const char allowedChars[] = { 'U','D','L','R','Y','A','B','X' };
-
   if( Serial.available() > 0 ) 
   {
     char inChar = (char)Serial.read();

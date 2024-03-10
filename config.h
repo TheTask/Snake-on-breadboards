@@ -7,9 +7,9 @@ extern bool canProcessInput;
 
 namespace config 
 {
-    const uint8_t  INIT_SNAKE_LENGTH = 2;
-    const uint8_t  BOARD_BRIGHTNESS = 10;
-    const uint32_t FOOD_COLOR = colors::WHITE;
+    static const uint8_t  INIT_SNAKE_LENGTH = 2;
+    static const uint8_t  BOARD_BRIGHTNESS = 10;
+    static const uint32_t FOOD_COLOR = colors::WHITE;
 
     enum difficulty
     {
