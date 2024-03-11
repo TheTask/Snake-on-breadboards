@@ -21,7 +21,7 @@ namespace sequence
   inline uint64_t _previousMillis = 0; 
   static const uint64_t _oneSecondDelay = 1000; 
 
-  inline startupState currentState = startupState::INIT;
+  inline startupState _currentState = startupState::INIT;
   inline volatile bool isStartupSequenceDone = false;
 
 

@@ -5,19 +5,19 @@ void sequence::startupSequence()
   uint64_t currentMillis = millis();
   bool update = currentMillis - sequence::_previousMillis >= sequence::_oneSecondDelay;
 
-  switch( sequence::currentState ) 
+  switch( sequence::_currentState ) 
   {
     case sequence::startupState::INIT:
       leds::clear();
       sequence::_previousMillis = currentMillis;
-      sequence::currentState = sequence::startupState::SHOW_DIGIT_3;
+      sequence::_currentState = sequence::startupState::SHOW_DIGIT_3;
       break;
 
     case sequence::startupState::SHOW_DIGIT_3:
       if( update ) 
       {
         leds::displayDigit( digits::digit_3, colors::RED );
-        sequence::currentState = sequence::startupState::SHOW_DIGIT_2;
+        sequence::_currentState = sequence::startupState::SHOW_DIGIT_2;
         sequence::_previousMillis = currentMillis;
       }
       break;
@@ -27,7 +27,7 @@ void sequence::startupSequence()
       {
         leds::clear();
         leds::displayDigit( digits::digit_2,colors::RED );
-        sequence::currentState = sequence::startupState::SHOW_DIGIT_1;
+        sequence::_currentState = sequence::startupState::SHOW_DIGIT_1;
         sequence::_previousMillis = currentMillis;
       }
       break;
@@ -37,7 +37,7 @@ void sequence::startupSequence()
       {
         leds::clear();
         leds::displayDigit( digits::digit_1,colors::RED );
-        sequence::currentState = sequence::startupState::DONE;
+        sequence::_currentState = sequence::startupState::DONE;
         sequence::_previousMillis = currentMillis;
       }
       break;
@@ -114,7 +114,7 @@ void sequence::_movePixelUp( uint8_t numPixels,uint8_t* currentPixelIndex )
   for( uint8_t i = 0; i < numPixels; i++ )
   {
     leds::displayPixel( *currentPixelIndex,colors::RED );
-    *currentPixelIndex -= leds::WIDTH;
+    (*currentPixelIndex)-= leds::WIDTH;
     delay( _delay_ms );
   }
   (*currentPixelIndex)+= leds::WIDTH;

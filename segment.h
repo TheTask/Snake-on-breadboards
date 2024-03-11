@@ -27,7 +27,7 @@ class Segment
 
     bool operator==( const Segment& other ) const 
     {
-        return _row == other._row && _col == other._col;
+        return this->_row == other._row && this->_col == other._col;
     }
 };
 

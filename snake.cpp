@@ -28,13 +28,14 @@ void snake::initSnake()
 
 void snake::initFood()
 {
-  snake::food_row = random( leds::HEIGHT );
+  snake::food_row = random(  );
   snake::food_col = random( leds::WIDTH );
 
   while( snake::board[ snake::food_row * leds::WIDTH + snake::food_col ] != ' ' )
   {
     snake::food_row = random( leds::HEIGHT );
     snake::food_col = random( leds::WIDTH );
+    //food = FoodSegment( leds::HEIGHT,leds::WIDTH );
   }
 
 	snake::board[ snake::food_row * leds::WIDTH + snake::food_col  ] = 'X';
@@ -71,9 +72,11 @@ void snake::move()
           break;
   }
 
-  snake::snake_vec.push_back( head );
-  snake::board[ head.getRow() * leds::WIDTH + head.getCol() ] = 'O';
-  snake::deleteEndOfSnake();
+    if( head.getRow() == snake::food_row && head.getCol() == snake::food_col ) initFood();
+    else deleteEndOfSnake();
+
+    snake::snake_vec.push_back( head );
+    snake::board[ head.getRow() * leds::WIDTH + head.getCol() ] = 'O';
 }
 
 
@@ -96,14 +99,6 @@ void snake::enqueueDirection( String direction )
   else if( ( direction == "L" || direction == "X" ) && ( lastDir != snake::direction::RIGHT ) ) dir = static_cast< int8_t >( snake::direction::LEFT );
 
   if( dir != -1 ) snake::_directionQueue.push( &dir );
-}
-
-boolean snake::hasEatenFood()
-{
-  Segment head = snake::snake_vec.back();
-	FoodSegment food = FoodSegment( snake::food_row,snake::food_col );
-
-	return head == food;
 }
 
 

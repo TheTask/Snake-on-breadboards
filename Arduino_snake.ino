@@ -38,13 +38,6 @@ void loop()
     if( updateGameState ) 
     {
       previousMillis = currentMillis;
-
-      if( snake::hasEatenFood() ) 
-      {
-        FoodSegment segment = FoodSegment( snake::food_row,snake::food_col );
-        snake::snake_vec.push_back( segment );
-        snake::initFood();
-      }
       
       snake::move();
 

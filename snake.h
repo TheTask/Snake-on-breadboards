@@ -35,8 +35,6 @@ namespace snake
   void initSnake();
   void initFood();
   void move();
-
-  boolean hasEatenFood();
   
   void deleteEndOfSnake();
 
