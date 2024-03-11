@@ -55,6 +55,23 @@ void sequence::startupSequence()
 
 void sequence::gameoverSequence()
 {
+  sequence::_spiralColor = colors::RED;
+  sequence::_drawSpiral();
+  delay( 2000 );
+  leds::clear();
+}
+
+void sequence::gamewonSequence()
+{
+  sequence::_spiralColor = colors::GREEN;
+  sequence::_drawSpiral();
+  delay( 2000 );
+  leds::clear();
+}
+
+
+void sequence::_drawSpiral()
+{
   uint8_t pixelIndex = 0;
   uint8_t* currentPixelIndex = &pixelIndex;
 
@@ -71,9 +88,6 @@ void sequence::gameoverSequence()
     _movePixelUp( initHeight--,currentPixelIndex );
     _movePixelRight( initWidth--,currentPixelIndex );
   }
-  
-  delay( 2000 );
-  leds::clear();
 }
 
 
@@ -81,9 +95,9 @@ void sequence::_movePixelRight( uint8_t numPixels,uint8_t* currentPixelIndex )
 {
   for( uint8_t i = 0; i < numPixels; i++ )
   {
-    leds::displayPixel( *currentPixelIndex,colors::RED );
+    leds::displayPixel( *currentPixelIndex,sequence::_spiralColor );
     (*currentPixelIndex)++;
-    delay( _delay_ms );
+    delay( _fiveMsDelay );
   }
   (*currentPixelIndex)--;
 }
@@ -92,9 +106,9 @@ void sequence::_movePixelDown( uint8_t numPixels,uint8_t* currentPixelIndex )
 {
   for( uint8_t i = 0; i < numPixels; i++ )
   {
-    leds::displayPixel( *currentPixelIndex,colors::RED );
+    leds::displayPixel( *currentPixelIndex,sequence::_spiralColor );
     (*currentPixelIndex)+= leds::WIDTH;
-    delay( _delay_ms );
+    delay( _fiveMsDelay );
   }
   (*currentPixelIndex)-= leds::WIDTH;
 }
@@ -103,9 +117,9 @@ void sequence::_movePixelLeft( uint8_t numPixels,uint8_t* currentPixelIndex )
 {
   for( uint8_t i = 0; i < numPixels; i++ )
   {
-    leds::displayPixel( *currentPixelIndex,colors::RED );
+    leds::displayPixel( *currentPixelIndex,sequence::_spiralColor );
     (*currentPixelIndex)--;
-    delay( _delay_ms );
+    delay( _fiveMsDelay );
   }
   (*currentPixelIndex)++;
 }
@@ -113,9 +127,9 @@ void sequence::_movePixelUp( uint8_t numPixels,uint8_t* currentPixelIndex )
 {
   for( uint8_t i = 0; i < numPixels; i++ )
   {
-    leds::displayPixel( *currentPixelIndex,colors::RED );
+    leds::displayPixel( *currentPixelIndex,sequence::_spiralColor );
     (*currentPixelIndex)-= leds::WIDTH;
-    delay( _delay_ms );
+    delay( _fiveMsDelay );
   }
   (*currentPixelIndex)+= leds::WIDTH;
 }

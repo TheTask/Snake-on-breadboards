@@ -41,7 +41,11 @@ void loop()
       
       snake::move();
 
-      if( snake::hasWon() ) {}
+      if( snake::hasWon() ) 
+      {
+        sequence::gamewonSequence();
+        softwareReset();
+      }
       if( snake::hasLost() )
       {
         sequence::gameoverSequence();

@@ -26,8 +26,7 @@ namespace snake
   inline Vector< Segment > snake_vec( _storage );
   inline uint8_t board[ leds::SIZE ];
 
-  inline uint8_t food_row;
-  inline uint8_t food_col;
+  inline FoodSegment food;
 
   void enqueueDirection( String direction );
   

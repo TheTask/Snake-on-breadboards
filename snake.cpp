@@ -7,7 +7,7 @@ void snake::initBoard()
 		for( uint8_t col = 0; col < leds::WIDTH; col++ )
 		{
       if( row == 0 || row == leds::HEIGHT - 1 || col == 0 || col == leds::WIDTH - 1 )
-        snake::board[ row * leds::WIDTH + col ] = '/'; //border
+        snake::board[ row * leds::WIDTH + col ] = '/';
       else
         snake::board[ row * leds::WIDTH + col ] = ' ';
 		}
@@ -19,7 +19,7 @@ void snake::initSnake()
 {
 	for( uint8_t i = 0; i < config::INIT_SNAKE_LENGTH; i++ )
 	{
-		SnakeSegment segment = SnakeSegment( leds::HEIGHT / 2,i + 1 ); //roughly middle screen
+		SnakeSegment segment = SnakeSegment( leds::HEIGHT / 2,i + 1 ); 
 		snake::snake_vec.push_back( segment );
 		snake::board[ i + ( leds::HEIGHT / 2 * leds::WIDTH ) + 1 ] = 'O';
 	}
@@ -28,17 +28,21 @@ void snake::initSnake()
 
 void snake::initFood()
 {
-  snake::food_row = random(  );
-  snake::food_col = random( leds::WIDTH );
-
-  while( snake::board[ snake::food_row * leds::WIDTH + snake::food_col ] != ' ' )
+  do 
   {
-    snake::food_row = random( leds::HEIGHT );
-    snake::food_col = random( leds::WIDTH );
-    //food = FoodSegment( leds::HEIGHT,leds::WIDTH );
-  }
+    uint8_t newRow = random( 1,leds::HEIGHT - 1 );
+    uint8_t newCol = random( 1,leds::WIDTH - 1 );
 
-	snake::board[ snake::food_row * leds::WIDTH + snake::food_col  ] = 'X';
+    if( snake::board[newRow * leds::WIDTH + newCol] == ' ') 
+    {
+      snake::food = FoodSegment( newRow,newCol );
+
+      snake::board[ newRow * leds::WIDTH + newCol ] = 'X';
+      break;
+    }
+  } 
+  while( true );
+
   leds::display( snake::board );
 }
 
@@ -72,7 +76,7 @@ void snake::move()
           break;
   }
 
-    if( head.getRow() == snake::food_row && head.getCol() == snake::food_col ) initFood();
+    if( head.getRow() == snake::food.getRow() && head.getCol() == snake::food.getCol() ) initFood();
     else deleteEndOfSnake();
 
     snake::snake_vec.push_back( head );
@@ -113,18 +117,7 @@ void snake::deleteEndOfSnake()
 
 bool snake::hasWon()
 {
-  bool space = false;
-
-  for( uint8_t i = 0; i < leds::SIZE; i++ )
-  {
-    	if( snake::board[ i ] == ' ' )
-      {
-        space = true;
-        break;
-      }
-  }
-
-  return !space;
+  return snake::snake_vec.size() == leds::SIZE - ( 2 * leds::WIDTH + 2 * ( leds::HEIGHT - 2 ) );
 }
  
 
