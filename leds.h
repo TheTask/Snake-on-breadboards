@@ -5,7 +5,6 @@
 #include "config.h"
 
 #define LED_PIN     13 
-#define NUM_LEDS    196  
 
 namespace leds
 {
@@ -14,14 +13,16 @@ namespace leds
 
   const uint8_t SIZE = WIDTH * HEIGHT;
 
-  extern Adafruit_NeoPixel _leds;
+  inline Adafruit_NeoPixel _leds( leds::SIZE,LED_PIN,NEO_GRB + NEO_KHZ800 );
 
   void init();
   void display( const uint8_t* board );
   void clear();
 
-  void displayDigit( const bool* digit,uint32_t color );
+  void displayDigit( const char* digit,uint32_t color );
   void displayPixel( uint8_t pixelIndex,uint32_t color );
+  void displayColor( uint32_t color );
+  void displayConfigScene();
 }
 
 #endif

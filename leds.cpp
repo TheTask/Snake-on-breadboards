@@ -1,14 +1,5 @@
 #include "leds.h"
 
-// Create an instance of the Adafruit_NeoPixel class called 'leds'.
-// Parameter 1 = number of pixels in the strip
-// Parameter 2 = Arduino pin number (most are valid)
-// Parameter 3 = pixel type flags, add together as needed:
-//   NEO_KHZ800  800 KHz bitstream (most NeoPixel products w/WS2812 LEDs)
-//   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
-Adafruit_NeoPixel leds::_leds( NUM_LEDS,LED_PIN,NEO_GRB + NEO_KHZ800 );
-
-
 void leds::init()
 {
     _leds.begin(); 
@@ -40,7 +31,7 @@ void leds::clear()
 }
 
 
-void leds::displayDigit( const bool* digit,uint32_t color )
+void leds::displayDigit( const char* digit,uint32_t color )
 {
   for( uint8_t row = 0; row < leds::HEIGHT; row++ )
   {
@@ -64,5 +55,26 @@ void leds::displayDigit( const bool* digit,uint32_t color )
 void leds::displayPixel( uint8_t pixelIndex,uint32_t color )
 {
   _leds.setPixelColor( pixelIndex,color );
+  _leds.show();
+}
+
+void leds::displayColor( uint32_t color )
+{
+  for( uint8_t i = 0; i < leds::SIZE; i++ )
+  {
+    _leds.setPixelColor( i,color );
+  }
+  _leds.show();
+}
+
+
+void leds::displayConfigScene()
+{
+  for( uint8_t i = 0; i < leds::SIZE; i++ )
+  {
+    if( i % leds::WIDTH >= 0  && i % leds::WIDTH < 4 )  _leds.setPixelColor( i,colors::GREEN );
+    if( i % leds::WIDTH >= 5  && i % leds::WIDTH < 9 )  _leds.setPixelColor( i,colors::BLUE );
+    if( i % leds::WIDTH >= 10 && i % leds::WIDTH < 14 ) _leds.setPixelColor( i,colors::RED );
+  }
   _leds.show();
 }

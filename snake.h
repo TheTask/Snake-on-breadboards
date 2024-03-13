@@ -7,9 +7,6 @@
 #include <Vector.h>
 #include <cppQueue.h>
 
-#define VECTOR_MAX_ELEMENTS 200
-
-
 namespace snake
 {
   enum direction
@@ -22,7 +19,7 @@ namespace snake
   inline lastDir = snake::direction::UP;
   inline cppQueue	_directionQueue( sizeof( snake::direction ),5,FIFO );	
 
-  inline Segment _storage[ VECTOR_MAX_ELEMENTS ];
+  inline Segment _storage[ leds::SIZE ];
   inline Vector< Segment > snake_vec( _storage );
   inline uint8_t board[ leds::SIZE ];
 
