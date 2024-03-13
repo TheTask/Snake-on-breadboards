@@ -1,18 +1,15 @@
 #include <avr/wdt.h>
 #include "game.h"
-#include "colors.h"
-#include "digits.h"
-#include "flags.h"
 
 volatile char lastButtonPress = 0;
-volatile char* lastButtonPressPtr = &lastButtonPress;
+char* lastButtonPressPtr = &lastButtonPress;
 
 static const char allowedChars[] = { 'U','D','L','R','Y','A','B','X' };
 
 void setup() 
 {
   Serial.begin( 115200 );
-  while (!Serial); 
+  while( !Serial ); 
 
   flags::canProcessInput = true; 
 }

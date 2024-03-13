@@ -34,12 +34,14 @@ void game::game( char* lastButtonPressPtr )
 
         String buttonPressed = String( *lastButtonPressPtr );
 
-        if( buttonPressed == "B" ) config::setDifficulty( config::difficulty::EASY );
-        else if( buttonPressed == "Y" ) config::setDifficulty( config::difficulty::MEDIUM );
-        else if( buttonPressed == "A" ) config::setDifficulty( config::difficulty::HARD );
+        if( buttonPressed == "B"  || buttonPressed == "Y" || buttonPressed == "A"  )
+        { 
+              if( buttonPressed == "B" ) config::setDifficulty( config::difficulty::EASY );
+          else if( buttonPressed == "Y" ) config::setDifficulty( config::difficulty::MEDIUM );
+          else if( buttonPressed == "A" ) config::setDifficulty( config::difficulty::HARD );
 
-        game::_hasDifficultyBeenSet = true;
-
+          game::_hasDifficultyBeenSet = true;
+        }
         *lastButtonPressPtr = 0;
       }
       break;
@@ -67,23 +69,29 @@ void game::game( char* lastButtonPressPtr )
         
         snake::move();
 
-        if( snake::hasWon() ) 
+        if( snake::hasGameEnded() ) 
         {
-          sequence::gamewonSequence();
-          
-          softwareReset();
-        }
-        if( snake::hasLost() )
-        {
-          sequence::gameoverSequence();
-          softwareReset();
+          game::_currentGameState = game::gameState::ENDING_SEQUENCE;
         }
         else leds::display( snake::board );
       }
-    if( *lastButtonPressPtr != 0 ) 
-    {
-      snake::enqueueDirection( String( *lastButtonPressPtr ) );
-      *lastButtonPressPtr = 0;
-    }
+
+      if( *lastButtonPressPtr != 0 ) 
+      {
+        snake::enqueueDirection( String( *lastButtonPressPtr ) );
+        *lastButtonPressPtr = 0;
+      }
+      break;
+    case game::gameState::ENDING_SEQUENCE:
+      if( snake::hasWon() )
+      {
+        sequence::gamewonSequence();
+        softwareReset();
+      }
+      if( snake::hasLost() )
+      {
+        sequence::gameoverSequence();
+        softwareReset();
+      }
   }
 }

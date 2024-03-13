@@ -35,6 +35,7 @@ namespace snake
 
   bool hasWon();
   bool hasLost();
+  inline bool hasGameEnded(){ return hasWon() || hasLost(); }
 }
 
 
