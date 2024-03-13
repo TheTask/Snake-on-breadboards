@@ -16,6 +16,8 @@ namespace colors
 
     static const uint32_t WHITE = 0xFFFFFFFF;
     static const uint32_t OFF = 0x00000000; 
+
+    
 }
 
 

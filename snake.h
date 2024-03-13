@@ -3,7 +3,6 @@
 
 #include "segment.h"
 #include "leds.h"
-#include "flags.h"
 #include <Vector.h>
 #include <cppQueue.h>
 
@@ -16,7 +15,7 @@ namespace snake
     LEFT,
     RIGHT
   }
-  inline lastDir = snake::direction::UP;
+  inline lastDir = snake::direction::RIGHT;
   inline cppQueue	_directionQueue( sizeof( snake::direction ),5,FIFO );	
 
   inline Segment _storage[ leds::SIZE ];

@@ -7,7 +7,7 @@ extern bool canProcessInput;
 
 namespace config 
 {
-    static const uint8_t  INIT_SNAKE_LENGTH = 2;
+    static const uint8_t  INIT_SNAKE_LENGTH = 3;
     static const uint8_t  BOARD_BRIGHTNESS = 10;
     static const uint32_t FOOD_COLOR = colors::WHITE;
 
