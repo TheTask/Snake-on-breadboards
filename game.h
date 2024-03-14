@@ -17,12 +17,13 @@ namespace game
     SELECT_DIFFICULTY,
     STARTUP_SEQUENCE,
     GAME,
-    ENDING_SEQUENCE
+    ENDING_SEQUENCE,
+    JOYSTICK_NOT_CONNECTED
   };
 
-  inline gameState _currentGameState = gameState::INIT;
-
+  static gameState _currentGameState = gameState::INIT;
   static bool _hasDifficultyBeenSet = false;
+  
   void game( char* lastButtonPress );
 }
 

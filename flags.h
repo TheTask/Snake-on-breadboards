@@ -4,6 +4,7 @@
 namespace flags 
 {
     inline volatile bool canProcessInput;
+    inline volatile bool isJoystickConnected;
 }
 
 

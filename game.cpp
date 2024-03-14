@@ -7,6 +7,9 @@ void game::game( char* lastButtonPressPtr )
   unsigned long currentTime = millis();
   bool update = currentTime - lastTime > 1000;
 
+  //game::eventHandler( lastButtonPressPrt );
+
+
   switch( game::_currentGameState ) 
   {
     case game::gameState::INIT:
@@ -27,22 +30,6 @@ void game::game( char* lastButtonPressPtr )
           game::_currentGameState = game::gameState::STARTUP_SEQUENCE;
           flags::canProcessInput = false;
         }
-      }
-
-      if( *lastButtonPressPtr != 0 ) 
-      {
-
-        String buttonPressed = String( *lastButtonPressPtr );
-
-        if( buttonPressed == "B"  || buttonPressed == "Y" || buttonPressed == "A"  )
-        { 
-              if( buttonPressed == "B" ) config::setDifficulty( config::difficulty::EASY );
-          else if( buttonPressed == "Y" ) config::setDifficulty( config::difficulty::MEDIUM );
-          else if( buttonPressed == "A" ) config::setDifficulty( config::difficulty::HARD );
-
-          game::_hasDifficultyBeenSet = true;
-        }
-        *lastButtonPressPtr = 0;
       }
       break;
 
@@ -69,10 +56,7 @@ void game::game( char* lastButtonPressPtr )
         
         snake::move();
 
-        if( snake::hasGameEnded() ) 
-        {
-          game::_currentGameState = game::gameState::ENDING_SEQUENCE;
-        }
+        if( snake::hasGameEnded() ) game::_currentGameState = game::gameState::ENDING_SEQUENCE;
         else leds::display( snake::board );
       }
 
@@ -83,15 +67,14 @@ void game::game( char* lastButtonPressPtr )
       }
       break;
     case game::gameState::ENDING_SEQUENCE:
-      if( snake::hasWon() )
-      {
-        sequence::gamewonSequence();
-        softwareReset();
-      }
-      if( snake::hasLost() )
-      {
-        sequence::gameoverSequence();
-        softwareReset();
-      }
+      if( snake::hasWon() ) sequence::gamewonSequence();
+      if( snake::hasLost() ) sequence::gameoverSequence();
+
+      softwareReset();
+      break;
+    case game::gameState::JOYSTICK_NOT_CONNECTED:
+      leds::displayColor( colors::BLUE );
+      delay(10000);
+      break;
   }
 }

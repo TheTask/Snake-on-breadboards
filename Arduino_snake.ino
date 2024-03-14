@@ -4,7 +4,7 @@
 volatile char lastButtonPress = 0;
 char* lastButtonPressPtr = &lastButtonPress;
 
-static const char allowedChars[] = { 'U','D','L','R','Y','A','B','X' };
+static const char allowedChars[] = { 'U','D','L','R','Y','A','B','X','T','F' };
 
 void setup() 
 {

@@ -36,11 +36,19 @@ last_button_pressed = -1  # Initialize with a value that won't match any button
 last_press_time = 0
 debounce_time = 0.2  # 200 milliseconds
 
-while(True):
+
+arduino = serial.Serial(arduino_port, baud_rate, timeout=1)
+isJoystickConnected = True;
+
+while True:
     try:
-        arduino = serial.Serial(arduino_port, baud_rate, timeout=1)
+        
         hid_device.open(nimbus_vendor_id, nimbus_product_id)
+        
         print("Joystick connected!")
+        isJoystickConnected = True;
+        print("T")
+        arduino.write(f"T\n".encode())
 
         while True:
             # Read the current state
@@ -71,11 +79,17 @@ while(True):
             if( button_pressed <= 7 ):
                 # Send to Arduino on Serial, don't encode back buttons and joysticks
                 if "DPAD" in button_map[button_pressed]:
+                    #simply send L, R, U, D to Arduino
                     arduino.write(f"{button_map[button_pressed][5]}\n".encode())
                 else:
-                    arduino.write(f"{button_map[button_pressed][0]}\n".encode())
+                    arduino.write(f"{button_map[button_pressed]}\n".encode())
 
     except Exception as e:
         hid_device.close()
+        if isJoystickConnected:
+            print("F")
+            arduino.write(f"F\n".encode())
+            isJoystickConnected = False;
+            
         print("Joystick not connected. Retrying in 10s...")
         time.sleep(10)
