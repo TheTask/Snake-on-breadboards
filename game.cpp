@@ -31,6 +31,21 @@ void game::game( char* lastButtonPressPtr )
           flags::canProcessInput = false;
         }
       }
+            if( *lastButtonPressPtr != 0 ) 
+      {
+
+        String buttonPressed = String( *lastButtonPressPtr );
+
+        if( buttonPressed == "B"  || buttonPressed == "Y" || buttonPressed == "A"  )
+        { 
+              if( buttonPressed == "B" ) config::setDifficulty( config::difficulty::EASY );
+          else if( buttonPressed == "Y" ) config::setDifficulty( config::difficulty::MEDIUM );
+          else if( buttonPressed == "A" ) config::setDifficulty( config::difficulty::HARD );
+
+          game::_hasDifficultyBeenSet = true;
+        }
+        *lastButtonPressPtr = 0;
+      }
       break;
 
     case game::gameState::STARTUP_SEQUENCE:
