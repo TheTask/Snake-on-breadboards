@@ -36,8 +36,14 @@ void game::game( char* lastButtonPressPtr )
 
         String buttonPressed = String( *lastButtonPressPtr );
 
-        if( buttonPressed == "B"  || buttonPressed == "Y" || buttonPressed == "A"  )
+        if( buttonPressed == "B"  || buttonPressed == "Y" || buttonPressed == "A" || buttonPressed == "T" || buttonPressed == "F" )
         { 
+          if( buttonPressed == "F" )
+          {
+            game::_currentGameState = game::gameState::JOYSTICK_NOT_CONNECTED;
+            flags::isJoystickConnected = false;
+            break;
+          }
               if( buttonPressed == "B" ) config::setDifficulty( config::difficulty::EASY );
           else if( buttonPressed == "Y" ) config::setDifficulty( config::difficulty::MEDIUM );
           else if( buttonPressed == "A" ) config::setDifficulty( config::difficulty::HARD );
