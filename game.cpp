@@ -44,6 +44,11 @@ void game::game( char* lastButtonPressPtr )
             flags::isJoystickConnected = false;
             break;
           }
+          if( buttonPressed == "T" )
+          {
+            flags::isJoystickConnected = true;
+            break;
+          }
               if( buttonPressed == "B" ) config::setDifficulty( config::difficulty::EASY );
           else if( buttonPressed == "Y" ) config::setDifficulty( config::difficulty::MEDIUM );
           else if( buttonPressed == "A" ) config::setDifficulty( config::difficulty::HARD );
