@@ -23,10 +23,8 @@ void leds::display( const uint8_t* board )
 
 void leds::clear()
 {
-  for( uint8_t i = 0; i < leds::SIZE; i++ )
-  {
-    _leds.setPixelColor( i,colors::OFF );
-  }
+  for( uint8_t i = 0; i < leds::SIZE; i++ ) _leds.setPixelColor( i,colors::OFF );
+
   _leds.show();
 }
 
@@ -60,10 +58,8 @@ void leds::displayPixel( uint8_t pixelIndex,uint32_t color )
 
 void leds::displayColor( uint32_t color )
 {
-  for( uint8_t i = 0; i < leds::SIZE; i++ )
-  {
-    _leds.setPixelColor( i,color );
-  }
+  for( uint8_t i = 0; i < leds::SIZE; i++ ) _leds.setPixelColor( i,color );
+
   _leds.show();
 }
 

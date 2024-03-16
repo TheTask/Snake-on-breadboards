@@ -3,8 +3,6 @@
 
 #include "colors.h"
 
-extern bool canProcessInput;
-
 namespace config 
 {
     static const uint8_t  INIT_SNAKE_LENGTH = 3;
