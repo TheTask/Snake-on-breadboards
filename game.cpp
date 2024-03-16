@@ -1,14 +1,45 @@
 #include "game.h"
 
+void game::_eventHandler( char* lastButtonPressPtr )
+{
+  if( *lastButtonPressPtr != 0 ) 
+  {
+    String buttonPressed = String( *lastButtonPressPtr );
+
+    if( game::_currentGameState == game::gameState::GAME ) snake::enqueueDirection( buttonPressed );
+    else if( game::_currentGameState == game::gameState::SELECT_DIFFICULTY )
+    {
+      if( buttonPressed == "B"  || buttonPressed == "Y" || buttonPressed == "A" || buttonPressed == "T" || buttonPressed == "F" )
+      { 
+        if( buttonPressed == "F" )
+        {
+          game::_currentGameState = game::gameState::JOYSTICK_NOT_CONNECTED;
+          flags::isJoystickConnected = false;
+          *lastButtonPressPtr = 0;
+          return;
+        }
+        if( buttonPressed == "T" )
+        {
+          flags::isJoystickConnected = true;
+          *lastButtonPressPtr = 0;
+          return;
+        }
+             if( buttonPressed == "B" ) config::setDifficulty( config::difficulty::EASY );
+        else if( buttonPressed == "Y" ) config::setDifficulty( config::difficulty::MEDIUM );
+        else if( buttonPressed == "A" ) config::setDifficulty( config::difficulty::HARD );
+
+        game::_hasDifficultyBeenSet = true;
+      }
+    }
+    *lastButtonPressPtr = 0;
+  }
+}
 
 void game::game( char* lastButtonPressPtr )
 {
   static unsigned long lastTime = 0;
   unsigned long currentTime = millis();
   bool update = currentTime - lastTime > 1000;
-
-  //game::eventHandler( lastButtonPressPrt );
-
 
   switch( game::_currentGameState ) 
   {
@@ -30,32 +61,6 @@ void game::game( char* lastButtonPressPtr )
           game::_currentGameState = game::gameState::STARTUP_SEQUENCE;
           flags::canProcessInput = false;
         }
-      }
-            if( *lastButtonPressPtr != 0 ) 
-      {
-
-        String buttonPressed = String( *lastButtonPressPtr );
-
-        if( buttonPressed == "B"  || buttonPressed == "Y" || buttonPressed == "A" || buttonPressed == "T" || buttonPressed == "F" )
-        { 
-          if( buttonPressed == "F" )
-          {
-            game::_currentGameState = game::gameState::JOYSTICK_NOT_CONNECTED;
-            flags::isJoystickConnected = false;
-            break;
-          }
-          if( buttonPressed == "T" )
-          {
-            flags::isJoystickConnected = true;
-            break;
-          }
-              if( buttonPressed == "B" ) config::setDifficulty( config::difficulty::EASY );
-          else if( buttonPressed == "Y" ) config::setDifficulty( config::difficulty::MEDIUM );
-          else if( buttonPressed == "A" ) config::setDifficulty( config::difficulty::HARD );
-
-          game::_hasDifficultyBeenSet = true;
-        }
-        *lastButtonPressPtr = 0;
       }
       break;
 
@@ -79,28 +84,26 @@ void game::game( char* lastButtonPressPtr )
       if( update ) 
       {
         lastTime = currentTime;
-        
+  
         snake::move();
 
         if( snake::hasGameEnded() ) game::_currentGameState = game::gameState::ENDING_SEQUENCE;
         else leds::display( snake::board );
       }
 
-      if( *lastButtonPressPtr != 0 ) 
-      {
-        snake::enqueueDirection( String( *lastButtonPressPtr ) );
-        *lastButtonPressPtr = 0;
-      }
       break;
     case game::gameState::ENDING_SEQUENCE:
       if( snake::hasWon() ) sequence::gamewonSequence();
       if( snake::hasLost() ) sequence::gameoverSequence();
 
       softwareReset();
-      break;
+
     case game::gameState::JOYSTICK_NOT_CONNECTED:
       leds::displayColor( colors::BLUE );
-      delay(10000);
+      delay(5000);
+      softwareReset();
       break;
   }
+
+  game::_eventHandler( lastButtonPressPtr );
 }

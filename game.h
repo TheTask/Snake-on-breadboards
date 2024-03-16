@@ -24,7 +24,8 @@ namespace game
   static gameState _currentGameState = gameState::INIT;
   static bool _hasDifficultyBeenSet = false;
   
-  void game( char* lastButtonPress );
+  void _eventHandler( char* lastButtonPressPtr );
+  void game( char* lastButtonPressPtr );
 }
 
 #endif
