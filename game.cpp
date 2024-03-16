@@ -6,30 +6,33 @@ void game::_eventHandler( char* lastButtonPressPtr )
   {
     String buttonPressed = String( *lastButtonPressPtr );
 
-    if( game::_currentGameState == game::gameState::GAME ) snake::enqueueDirection( buttonPressed );
-    else if( game::_currentGameState == game::gameState::SELECT_DIFFICULTY )
+    if( buttonPressed == "F" )
     {
-      if( buttonPressed == "B"  || buttonPressed == "Y" || buttonPressed == "A" || buttonPressed == "T" || buttonPressed == "F" )
-      { 
-        if( buttonPressed == "F" )
-        {
-          game::_currentGameState = game::gameState::JOYSTICK_NOT_CONNECTED;
-          flags::isJoystickConnected = false;
-          *lastButtonPressPtr = 0;
-          return;
-        }
-        if( buttonPressed == "T" )
-        {
-          flags::isJoystickConnected = true;
-          *lastButtonPressPtr = 0;
-          return;
-        }
-             if( buttonPressed == "B" ) config::setDifficulty( config::difficulty::EASY );
-        else if( buttonPressed == "Y" ) config::setDifficulty( config::difficulty::MEDIUM );
-        else if( buttonPressed == "A" ) config::setDifficulty( config::difficulty::HARD );
+      game::_currentGameState = game::gameState::JOYSTICK_NOT_CONNECTED;
+      flags::isJoystickConnected = false;
 
-        game::_hasDifficultyBeenSet = true;
-      }
+    }
+    if( buttonPressed == "T" )
+    {
+      flags::isJoystickConnected = true;
+      softwareReset();
+    }
+
+    switch( game::_currentGameState ) 
+    {
+      case game::gameState::SELECT_DIFFICULTY:
+        if( buttonPressed == "B"  || buttonPressed == "Y" || buttonPressed == "A" )
+        { 
+               if( buttonPressed == "B" ) config::setDifficulty( config::difficulty::EASY );
+          else if( buttonPressed == "Y" ) config::setDifficulty( config::difficulty::MEDIUM );
+          else if( buttonPressed == "A" ) config::setDifficulty( config::difficulty::HARD );
+
+          game::_hasDifficultyBeenSet = true;
+        }
+        break;
+      case game::gameState::GAME:
+        snake::enqueueDirection( buttonPressed );
+        break;
     }
     *lastButtonPressPtr = 0;
   }
@@ -100,8 +103,6 @@ void game::game( char* lastButtonPressPtr )
 
     case game::gameState::JOYSTICK_NOT_CONNECTED:
       leds::displayColor( colors::BLUE );
-      delay(5000);
-      softwareReset();
       break;
   }
 
