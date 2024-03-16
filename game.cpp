@@ -15,7 +15,7 @@ void game::_eventHandler( char* lastButtonPressPtr )
     if( buttonPressed == "T" )
     {
       flags::isJoystickConnected = true;
-      softwareReset();
+      game::_currentGameState = game::gameState::INIT;
     }
 
     switch( game::_currentGameState ) 
