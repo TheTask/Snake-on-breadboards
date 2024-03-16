@@ -12,7 +12,7 @@ void setup()
   while( !Serial ); 
 
   flags::canProcessInput = true; 
-  randomSeed( analogRead( 0 ) );
+  randomSeed( randomSeed() );
 }
 
 
@@ -44,4 +44,14 @@ void softwareReset()
 {
   wdt_enable( WDTO_15MS );
   while( true ) {} 
+}
+
+
+uint64_t randomSeed()
+{
+  uint64_t sum = 0;
+
+  for( uint8_t i = 0; i < 8; i++ ) sum += analogRead( i );
+
+  return sum;
 }

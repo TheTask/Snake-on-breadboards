@@ -45,10 +45,11 @@ while True:
         
         hid_device.open(nimbus_vendor_id, nimbus_product_id)
         
-        print("Joystick connected!")
         isJoystickConnected = True;
-        print("T")
         arduino.write(f"T\n".encode())
+
+        print("Joystick connected!")
+        print("T")
 
         while True:
             # Read the current state
@@ -86,10 +87,13 @@ while True:
 
     except Exception as e:
         hid_device.close()
+        
         if isJoystickConnected:
-            print("F")
-            arduino.write(f"F\n".encode())
             isJoystickConnected = False;
             
+        arduino.write(f"F\n".encode())
+        
+        print("F")
         print("Joystick not connected. Retrying in 10s...")
+        
         time.sleep(10)

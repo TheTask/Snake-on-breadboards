@@ -33,7 +33,7 @@ void snake::initFood()
     uint8_t newRow = random( 1,leds::HEIGHT - 1 );
     uint8_t newCol = random( 1,leds::WIDTH - 1 );
 
-    if( snake::board[newRow * leds::WIDTH + newCol] == ' ') 
+    if( snake::board[ newRow * leds::WIDTH + newCol ] == ' ' ) 
     {
       snake::food = FoodSegment( newRow,newCol );
 

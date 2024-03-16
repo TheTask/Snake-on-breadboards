@@ -1,8 +1,6 @@
 #ifndef SEQUENCES_H
 #define SEQUENCES_H
  
-#include "config.h"
-#include "leds.h"
 #include "digits.h"
 #include "flags.h"
 #include "snake.h"
@@ -20,6 +18,7 @@ namespace sequence
 
   inline uint64_t _previousMillis = 0; 
   static const uint64_t _oneSecondDelay = 1000; 
+  static const uint64_t _twoSecondDelay = 2000; 
   static const uint8_t _fiveMsDelay = 5;
 
   inline startupState _currentState = startupState::INIT;
