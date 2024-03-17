@@ -50,6 +50,7 @@ void game::game( char* lastButtonPressPtr )
       if( update )
       {
         leds::init();
+        flags::canProcessInput = true; 
         game::_currentGameState = game::gameState::SELECT_DIFFICULTY;
       } 
       break;

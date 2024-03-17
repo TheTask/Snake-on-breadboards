@@ -11,7 +11,6 @@ void setup()
   Serial.begin( 115200 );
   while( !Serial ); 
 
-  flags::canProcessInput = true; 
   randomSeed( randomSeed() );
 }
 
@@ -28,9 +27,11 @@ void serialEvent()
   {
     char inChar = (char)Serial.read();
 
+    if( !flags::canProcessInput ) return;
+
     for( uint8_t i = 0; i < sizeof( allowedChars ) / sizeof( allowedChars[ 0 ] ); i++ ) 
     {
-      if( inChar == allowedChars[ i ] && flags::canProcessInput )
+      if( inChar == allowedChars[ i ] )
       { 
         *lastButtonPressPtr = inChar; 
         break;  
@@ -47,9 +48,9 @@ void softwareReset()
 }
 
 
-uint64_t randomSeed()
+uint16_t randomSeed()
 {
-  uint64_t sum = 0;
+  uint16_t sum = 0;
 
   for( uint8_t i = 0; i < 8; i++ ) sum += analogRead( i );
 

@@ -30,14 +30,13 @@ void snake::initFood()
 {
   do 
   {
-    uint8_t newRow = random( 1,leds::HEIGHT - 1 );
-    uint8_t newCol = random( 1,leds::WIDTH - 1 );
+    uint8_t foodRow = random( 1,leds::HEIGHT - 1 );
+    uint8_t foodCol = random( 1,leds::WIDTH - 1 );
 
-    if( snake::board[ newRow * leds::WIDTH + newCol ] == ' ' ) 
+    if( snake::board[ foodRow * leds::WIDTH + foodCol ] == ' ' ) 
     {
-      snake::food = FoodSegment( newRow,newCol );
-
-      snake::board[ newRow * leds::WIDTH + newCol ] = 'X';
+      snake::food = FoodSegment( foodRow,foodCol );
+      snake::board[ foodRow * leds::WIDTH + foodCol ] = 'X';
       break;
     }
   } 
