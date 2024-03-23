@@ -18,6 +18,7 @@ namespace game
     JOYSTICK_NOT_CONNECTED
   };
 
+  static unsigned long _lastTime = 0;
   static gameState _currentGameState = gameState::INIT;
   static bool _hasDifficultyBeenSet = false;
   

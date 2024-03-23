@@ -40,9 +40,8 @@ void game::_eventHandler( char* lastButtonPressPtr )
 
 void game::game( char* lastButtonPressPtr )
 {
-  static unsigned long lastTime = 0;
   unsigned long currentTime = millis();
-  bool update = currentTime - lastTime > 1000;
+  bool update = currentTime - game::_lastTime > 1000;
 
   switch( game::_currentGameState ) 
   {
@@ -83,11 +82,11 @@ void game::game( char* lastButtonPressPtr )
       break;
 
     case game::gameState::GAME:
-      update = currentTime - lastTime >= config::getGameConfig().UPDATE_DELAY;
+      update = currentTime - game::_lastTime >= config::getGameConfig().UPDATE_DELAY;
 
       if( update ) 
       {
-        lastTime = currentTime;
+        game::_lastTime = currentTime;
   
         snake::move();
 
