@@ -50,36 +50,36 @@ void snake::move()
 {
   if( !snake::_directionQueue.isEmpty() ) 
   {
-      int8_t nextDirInt;
-      snake::_directionQueue.pop( &nextDirInt );
+    int8_t nextDirInt;
+    snake::_directionQueue.pop( &nextDirInt );
 
-      snake::direction nextDir = static_cast< snake::direction >( nextDirInt );
-      snake::lastDir = nextDir;
+    snake::direction nextDir = static_cast< snake::direction >( nextDirInt );
+    snake::lastDir = nextDir;
   }
 
   Segment head = snake::snake_vec.back();
 
   switch( snake::lastDir ) 
   {
-      case snake::direction::UP:
-          head.decRow();
-          break;
-      case snake::direction::DOWN:
-          head.incRow();
-          break;
-      case snake::direction::LEFT:
-          head.decCol();
-          break;
-      case snake::direction::RIGHT:
-          head.incCol();
-          break;
+    case snake::direction::UP:
+      head.decRow();
+      break;
+    case snake::direction::DOWN:
+      head.incRow();
+      break;
+    case snake::direction::LEFT:
+      head.decCol();
+      break;
+    case snake::direction::RIGHT:
+      head.incCol();
+      break;
   }
 
-    if( head == snake::food ) initFood();
-    else deleteEndOfSnake();
+  if( head == snake::food ) initFood();
+  else deleteEndOfSnake();
 
-    snake::snake_vec.push_back( head );
-    snake::board[ head.getRow() * leds::WIDTH + head.getCol() ] = 'O';
+  snake::snake_vec.push_back( head );
+  snake::board[ head.getRow() * leds::WIDTH + head.getCol() ] = 'O';
 }
 
 

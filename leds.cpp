@@ -2,9 +2,9 @@
 
 void leds::init()
 {
-    _leds.begin(); 
-    _leds.setBrightness( config::BOARD_BRIGHTNESS );
-    leds::clear();
+  _leds.begin(); 
+  _leds.setBrightness( config::BOARD_BRIGHTNESS );
+  leds::clear();
 }
 
 void leds::display( const uint8_t* board )
