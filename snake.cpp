@@ -75,7 +75,7 @@ void snake::move()
           break;
   }
 
-    if( head.getRow() == snake::food.getRow() && head.getCol() == snake::food.getCol() ) initFood();
+    if( head == snake::food ) initFood();
     else deleteEndOfSnake();
 
     snake::snake_vec.push_back( head );

@@ -20,6 +20,7 @@ namespace sequence
   static const uint64_t _halfSecondDelay = 500; 
   static const uint64_t _oneSecondDelay = 1000; 
   static const uint64_t _twoSecondDelay = 2000; 
+  static const uint64_t _fiveSecondDelay = 5000; 
   static const uint8_t _fiveMsDelay = 5;
 
   inline startupState _currentState = startupState::INIT;

@@ -147,5 +147,5 @@ void sequence::gamewonSequence()
 
   leds::drawSquare( 0,0,14,colors::GREEN );
 
-  delay( sequence::_twoSecondDelay );
+  delay( sequence::_fiveSecondDelay );
 }
