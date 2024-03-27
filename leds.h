@@ -23,6 +23,10 @@ namespace leds
   void displayPixel( uint8_t pixelIndex,uint32_t color );
   void displayColor( uint32_t color );
   void displayConfigScene();
+
+  void _drawHorizontalLine( uint8_t row,uint8_t col,uint8_t length,uint32_t color );
+  void _drawVerticalLine( uint8_t row,uint8_t col,uint8_t length,uint32_t color );
+  void drawSquare( uint8_t topLeftCornerRow,uint8_t topLeftCornerCol,uint8_t sideLength,uint32_t color );
 }
 
 #endif
