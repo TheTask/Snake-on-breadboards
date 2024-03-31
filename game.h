@@ -1,7 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "snake.h"
 #include "sequences.h"
 
 void softwareReset();

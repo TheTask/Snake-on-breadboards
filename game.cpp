@@ -8,10 +8,10 @@ void game::_eventHandler( char* lastButtonPressPtr )
 
     if( buttonPressed == "F" )
     {
-      game::_currentGameState = game::gameState::JOYSTICK_NOT_CONNECTED;
       flags::isJoystickConnected = false;
-
+      game::_currentGameState = game::gameState::JOYSTICK_NOT_CONNECTED;
     }
+
     if( buttonPressed == "T" )
     {
       flags::isJoystickConnected = true;
@@ -30,6 +30,7 @@ void game::_eventHandler( char* lastButtonPressPtr )
           game::_hasDifficultyBeenSet = true;
         }
         break;
+
       case game::gameState::GAME:
         snake::enqueueDirection( buttonPressed );
         break;
@@ -41,49 +42,40 @@ void game::_eventHandler( char* lastButtonPressPtr )
 void game::game( char* lastButtonPressPtr )
 {
   unsigned long currentTime = millis();
-  bool update = currentTime - game::_lastTime > 1000;
+  bool update = currentTime - game::_lastTime >= config::getGameConfig().UPDATE_DELAY;
 
   switch( game::_currentGameState ) 
   {
     case game::gameState::INIT:
-      if( update )
-      {
-        leds::init();
-        flags::canProcessInput = true; 
-        game::_currentGameState = game::gameState::SELECT_DIFFICULTY;
-      } 
+      leds::init();
+      flags::canProcessInput = true; 
+      game::_currentGameState = game::gameState::SELECT_DIFFICULTY;
       break;
 
     case game::gameState::SELECT_DIFFICULTY:
-      if( update )
-      {
-        leds::displayConfigScene();
+      leds::displayConfigScene();
 
-        if( game::_hasDifficultyBeenSet )
-        {
-          game::_currentGameState = game::gameState::STARTUP_SEQUENCE;
-          flags::canProcessInput = false;
-        }
+      if( game::_hasDifficultyBeenSet )
+      {
+        game::_currentGameState = game::gameState::STARTUP_SEQUENCE;
+        flags::canProcessInput = false;
       }
       break;
 
     case game::gameState::STARTUP_SEQUENCE:
-      if( update )
+      if( !sequence::isStartupSequenceDone ) sequence::startupSequence();
+      else
       {
-        if( !sequence::isStartupSequenceDone ) sequence::startupSequence();
-        else
-        {
-          snake::initBoard();
-          snake::initSnake();
-          snake::initFood();
-          game::_currentGameState = game::gameState::GAME;
-        }
+        snake::initBoard();
+        snake::initSnake();
+        snake::initFood();
+
+        game::_currentGameState = game::gameState::GAME;
       }
-      break;
+    
+    break;
 
     case game::gameState::GAME:
-      update = currentTime - game::_lastTime >= config::getGameConfig().UPDATE_DELAY;
-
       if( update ) 
       {
         game::_lastTime = currentTime;
@@ -93,11 +85,11 @@ void game::game( char* lastButtonPressPtr )
         if( snake::hasGameEnded() ) game::_currentGameState = game::gameState::ENDING_SEQUENCE;
         else leds::display( snake::board );
       }
-
       break;
+
     case game::gameState::ENDING_SEQUENCE:
       if( snake::hasWon() ) sequence::gamewonSequence();
-      if( snake::hasLost() ) sequence::gameoverSequence();
+      else sequence::gameoverSequence();
 
       softwareReset();
 

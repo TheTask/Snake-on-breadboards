@@ -22,15 +22,15 @@ namespace snake
   inline Vector< Segment > snake_vec( _storage );
   inline uint8_t board[ leds::SIZE ];
 
-  inline FoodSegment food;
+  inline FoodSegment _food;
 
-  void enqueueDirection( String direction );
-  
+
   void initBoard();
   void initSnake();
   void initFood();
+
+  void enqueueDirection( String direction );
   void move();
-  
   void deleteEndOfSnake();
 
   bool hasWon();

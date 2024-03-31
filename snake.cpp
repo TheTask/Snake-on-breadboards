@@ -35,7 +35,7 @@ void snake::initFood()
 
     if( snake::board[ foodRow * leds::WIDTH + foodCol ] == ' ' ) 
     {
-      snake::food = FoodSegment( foodRow,foodCol );
+      snake::_food = FoodSegment( foodRow,foodCol );
       snake::board[ foodRow * leds::WIDTH + foodCol ] = 'X';
       break;
     }
@@ -75,7 +75,7 @@ void snake::move()
       break;
   }
 
-  if( head == snake::food ) initFood();
+  if( head == snake::_food ) initFood();
   else deleteEndOfSnake();
 
   snake::snake_vec.push_back( head );
