@@ -75,11 +75,14 @@ void snake::move()
       break;
   }
 
-  if( head == snake::_food ) initFood();
-  else deleteEndOfSnake();
-
   snake::snake_vec.push_back( head );
   snake::board[ head.getRow() * leds::WIDTH + head.getCol() ] = 'O';
+
+  if( !snake::hasGameEnded() )
+  {
+    if( head == snake::_food  ) initFood();
+    else deleteEndOfSnake();
+  }
 }
 
 

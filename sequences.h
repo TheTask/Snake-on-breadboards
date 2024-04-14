@@ -22,7 +22,7 @@ namespace sequence
   static const uint16_t _halfSecondDelay = 500; 
   static const uint16_t _oneSecondDelay  = 1000; 
   static const uint16_t _twoSecondDelay  = 2000; 
-  static const uint16_t _fiveSecondDelay = 5000; 
+  static const uint16_t _fiveteenSecondDelay = 15000; 
   
 
   inline startupState _currentState = startupState::INIT;
