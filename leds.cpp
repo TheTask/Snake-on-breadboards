@@ -7,7 +7,7 @@ void leds::init()
   leds::clear();
 }
 
-void leds::display( const uint8_t* board )
+void leds::displayBoard( const uint8_t* board )
 {
   for( uint8_t i = 0; i < leds::SIZE; i++ )
   {

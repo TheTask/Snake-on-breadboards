@@ -21,7 +21,7 @@ void snake::initSnake()
 	{
 		SnakeSegment segment = SnakeSegment( leds::HEIGHT / 2,i + 1 ); 
 		snake::snake_vec.push_back( segment );
-		snake::board[ i + ( leds::HEIGHT / 2 * leds::WIDTH ) + 1 ] = 'O';
+		snake::board[ ( leds::HEIGHT / 2 * leds::WIDTH ) + i + 1 ] = 'O';
 	}
 }
 
@@ -42,7 +42,7 @@ void snake::initFood()
   } 
   while( true );
 
-  leds::display( snake::board );
+  leds::displayBoard( snake::board );
 }
 
 
@@ -53,8 +53,7 @@ void snake::move()
     int8_t nextDirInt;
     snake::_directionQueue.pop( &nextDirInt );
 
-    snake::direction nextDir = static_cast< snake::direction >( nextDirInt );
-    snake::lastDir = nextDir;
+    snake::lastDir = static_cast< snake::direction >( nextDirInt );
   }
 
   Segment head = snake::snake_vec.back();

@@ -16,7 +16,7 @@ namespace config
     HARD
   }
 
-  inline _difficulty = difficulty::EASY;
+  inline _difficulty;
   inline void setDifficulty( config::difficulty difficulty ){ _difficulty = difficulty; }
   
   struct gameConfig 

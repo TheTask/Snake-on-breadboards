@@ -18,7 +18,7 @@ namespace leds
   void init();
   void clear();
 
-  void display( const uint8_t* board );
+  void displayBoard( const uint8_t* board );
   void displayDigit( const char* digit,uint32_t color );
   void displayPixel( uint8_t pixelIndex,uint32_t color );
   void displayColor( uint32_t color );

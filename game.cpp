@@ -83,7 +83,7 @@ void game::game( char* lastButtonPressPtr )
         snake::move();
 
         if( snake::hasGameEnded() ) game::_currentGameState = game::gameState::ENDING_SEQUENCE;
-        else leds::display( snake::board );
+        else leds::displayBoard( snake::board );
       }
       break;
 
