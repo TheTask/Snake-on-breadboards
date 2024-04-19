@@ -18,8 +18,8 @@ namespace snake
   inline lastDir = snake::direction::RIGHT;
   inline cppQueue	_directionQueue( sizeof( snake::direction ),5,FIFO );	
 
-  inline Segment _storage[ leds::SIZE ];
-  inline Vector< Segment > snake_vec( _storage );
+  inline SnakeSegment _storage[ leds::SIZE ];
+  inline Vector< SnakeSegment > snake_vec( _storage );
   inline uint8_t board[ leds::SIZE ];
 
   inline FoodSegment _food;

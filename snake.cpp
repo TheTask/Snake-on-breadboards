@@ -56,7 +56,7 @@ void snake::move()
     snake::lastDir = static_cast< snake::direction >( nextDirInt );
   }
 
-  Segment head = snake::snake_vec.back();
+  SnakeSegment head = snake::snake_vec.back();
 
   switch( snake::lastDir ) 
   {
@@ -109,7 +109,7 @@ void snake::enqueueDirection( String direction )
 
 void snake::deleteEndOfSnake()
 {
-  Segment tail = snake::snake_vec[ 0 ];
+  SnakeSegment tail = snake::snake_vec[ 0 ];
 
   snake::board[ tail.getRow() * leds::WIDTH + tail.getCol() ] = ' ';	
 	snake::snake_vec.remove( 0 ); 
@@ -124,7 +124,7 @@ bool snake::hasWon()
 
 bool snake::hasLost()
 { 
-  Segment head = snake::snake_vec.back();
+  SnakeSegment head = snake::snake_vec.back();
 
   if( head.getRow() == leds::HEIGHT - 1 || head.getCol() == leds::WIDTH - 1 ||  head.getRow() == 0 || head.getCol() == 0 ) return true;
 

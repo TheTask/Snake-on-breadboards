@@ -5,11 +5,11 @@
 
 class Segment
 {
-  private:
+  protected:
     uint8_t _row;
     uint8_t _col;
 
-  public:
+  protected:
     Segment(){}
 	  Segment( uint8_t row,uint8_t col ) 
       : 
@@ -17,28 +17,35 @@ class Segment
       _col( col ) 
       {}
 
-    inline uint8_t getRow() const { return this->_row; }
-    inline uint8_t getCol() const { return this->_col; }
+  public:
+    bool operator==( const Segment& other ) const 
+    {
+        return _row == other._row && _col == other._col;
+    }
+};
+
+
+class SnakeSegment : public Segment 
+{
+  public:
+    SnakeSegment() : Segment() {}
+    SnakeSegment( uint8_t row,uint8_t col ) : Segment( row,col ) {}
 
     inline void incRow(){ this->_row++; }
     inline void incCol(){ this->_col++; }
     inline void decRow(){ this->_row--; }
     inline void decCol(){ this->_col--; }
 
-    bool operator==( const Segment& other ) const 
-    {
-        return this->_row == other._row && this->_col == other._col;
-    }
+    inline uint8_t getRow() const { return this->_row; }
+    inline uint8_t getCol() const { return this->_col; }
 };
 
-class SnakeSegment : public Segment 
-{
-  public: using Segment::Segment; 
-};
 
 class FoodSegment : public Segment
 {
-  public: using Segment::Segment; 
+  public:
+    FoodSegment() : Segment() {}
+    FoodSegment( uint8_t row,uint8_t col ) : Segment( row,col ) {}
 };
 
 
