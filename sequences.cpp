@@ -4,8 +4,7 @@ void sequence::_movePixelRight( uint8_t numPixels,uint8_t* currentPixelIndex )
 {
   for( uint8_t i = 0; i < numPixels; i++ )
   {
-    leds::displayPixel( *currentPixelIndex,sequence::_spiralColor );
-    (*currentPixelIndex)++;
+    leds::displayPixel( (*currentPixelIndex)++,sequence::_spiralColor );
     delay( sequence::_fiveMsDelay );
   }
   (*currentPixelIndex)--;
@@ -16,8 +15,7 @@ void sequence::_movePixelDown( uint8_t numPixels,uint8_t* currentPixelIndex )
 {
   for( uint8_t i = 0; i < numPixels; i++ )
   {
-    leds::displayPixel( *currentPixelIndex,sequence::_spiralColor );
-    (*currentPixelIndex)+= leds::WIDTH;
+    leds::displayPixel( (*currentPixelIndex)+= leds::WIDTH,sequence::_spiralColor );
     delay( sequence::_fiveMsDelay );
   }
   (*currentPixelIndex)-= leds::WIDTH;
@@ -28,8 +26,7 @@ void sequence::_movePixelLeft( uint8_t numPixels,uint8_t* currentPixelIndex )
 {
   for( uint8_t i = 0; i < numPixels; i++ )
   {
-    leds::displayPixel( *currentPixelIndex,sequence::_spiralColor );
-    (*currentPixelIndex)--;
+    leds::displayPixel( (*currentPixelIndex)--,sequence::_spiralColor );
     delay( sequence::_fiveMsDelay );
   }
   (*currentPixelIndex)++;
@@ -40,8 +37,7 @@ void sequence::_movePixelUp( uint8_t numPixels,uint8_t* currentPixelIndex )
 {
   for( uint8_t i = 0; i < numPixels; i++ )
   {
-    leds::displayPixel( *currentPixelIndex,sequence::_spiralColor );
-    (*currentPixelIndex)-= leds::WIDTH;
+    leds::displayPixel( (*currentPixelIndex)-= leds::WIDTH,sequence::_spiralColor );
     delay( sequence::_fiveMsDelay );
   }
   (*currentPixelIndex)+= leds::WIDTH;

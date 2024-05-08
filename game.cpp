@@ -41,6 +41,8 @@ void game::_eventHandler( char* lastButtonPressPtr )
 
 void game::game( char* lastButtonPressPtr )
 {
+  game::_eventHandler( lastButtonPressPtr );
+
   unsigned long currentTime = millis();
   bool update = currentTime - game::_lastTime >= config::getGameConfig().UPDATE_DELAY;
 
@@ -97,6 +99,4 @@ void game::game( char* lastButtonPressPtr )
       leds::displayColor( colors::BLUE );
       break;
   }
-
-  game::_eventHandler( lastButtonPressPtr );
 }
