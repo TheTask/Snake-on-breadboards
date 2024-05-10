@@ -135,10 +135,10 @@ void sequence::gamewonSequence()
   leds::drawSquare( 3,3,8,colors::RED );
   delay( sequence::_halfSecondDelay );
 
-  leds::drawSquare( 2,2,10,colors::MAGENTA );
+  leds::drawSquare( 2,2,10,colors::WHITE );
   delay( sequence::_halfSecondDelay );
 
-  leds::drawSquare( 1,1,12,colors::WHITE );
+  leds::drawSquare( 1,1,12,colors::MAGENTA );
   delay( sequence::_halfSecondDelay );
 
   leds::drawSquare( 0,0,14,colors::GREEN );

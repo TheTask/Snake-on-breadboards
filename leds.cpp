@@ -7,6 +7,15 @@ void leds::init()
   leds::clear();
 }
 
+void leds::seventSegmentDisplayWrite( uint8_t input ) 
+{
+  for( uint8_t i = 0; i < 8; i++ ) 
+  {
+    if( input & ( 1 << i ) ) digitalWrite( dataPins[ i ],HIGH ); 
+    else digitalWrite( dataPins[ i ],LOW ); 
+  }
+}
+
 void leds::displayBoard( const uint8_t* board )
 {
   for( uint8_t i = 0; i < leds::SIZE; i++ )

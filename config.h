@@ -7,7 +7,7 @@ namespace config
 {
   static const uint8_t  INIT_SNAKE_LENGTH = 3;
   static const uint8_t  BOARD_BRIGHTNESS = 10;
-  static const uint32_t FOOD_COLOR = colors::WHITE;
+  static const uint32_t FOOD_COLOR = colors::MAGENTA;
 
   enum difficulty
   {
@@ -38,7 +38,7 @@ namespace config
     switch( _difficulty ) 
     {
       case EASY:
-          return gameConfig( colors::GREEN,colors::MAGENTA,300 ); 
+          return gameConfig( colors::GREEN,colors::WHITE,300 ); 
       case MEDIUM:
           return gameConfig( colors::BLUE,colors::YELLOW,200 ); 
       case HARD:

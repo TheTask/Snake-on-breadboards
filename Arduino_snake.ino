@@ -8,6 +8,8 @@ static const char allowedChars[] = { 'U','D','L','R','Y','A','B','X','T','F' };
 
 void setup() 
 {
+  for ( uint8_t i = 0; i < 8; i++ ) pinMode( leds::dataPins[ i ],OUTPUT );
+    
   Serial.begin( 115200 );
   while( !Serial ); 
 

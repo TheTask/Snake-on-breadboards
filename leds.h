@@ -15,8 +15,12 @@ namespace leds
 
   inline Adafruit_NeoPixel _leds( leds::SIZE,LED_PIN,NEO_GRB + NEO_KHZ800 );
 
+  const uint8_t dataPins[ 8 ] = { 5,6,7,8,9,10,11,12 };
+
   void init();
   void clear();
+
+  void seventSegmentDisplayWrite( uint8_t input );
 
   void displayBoard( const uint8_t* board );
   void displayDigit( const char* digit,uint32_t color );
