@@ -82,7 +82,7 @@ void snake::move()
     if( head == snake::_food  ) 
     {
       initFood();
-      leds::seventSegmentDisplayWrite( snake::snake_vec.size() - config::INIT_SNAKE_LENGTH );
+      leds::sevenSegmentDisplayWrite( snake::snake_vec.size() - config::INIT_SNAKE_LENGTH );
     }
     else deleteEndOfSnake();
   }

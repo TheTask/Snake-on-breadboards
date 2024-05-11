@@ -13,7 +13,7 @@ void setup()
   Serial.begin( 115200 );
   while( !Serial ); 
 
-  randomSeed( randomSeed() );
+  randomSeed( analogRandomSeed() );
 }
 
 
@@ -50,7 +50,7 @@ void softwareReset()
 }
 
 
-uint16_t randomSeed()
+uint16_t analogRandomSeed()
 {
   uint16_t sum = 0;
 
