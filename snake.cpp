@@ -74,19 +74,16 @@ void snake::move()
       break;
   }
 
+  if( !snake::hasWon() )
+  {
+    if( head == snake::_food ) snake::initFood();
+    else snake::deleteEndOfSnake();
+  }
+
   snake::snake_vec.push_back( head );
   snake::board[ head.getRow() * leds::WIDTH + head.getCol() ] = 'O';
-
-  if( !snake::hasGameEnded() )
-  {
-    if( head == snake::_food  ) 
-    {
-      initFood();
-      leds::sevenSegmentDisplayWrite( snake::snake_vec.size() - config::INIT_SNAKE_LENGTH );
-    }
-    else deleteEndOfSnake();
-  }
 }
+
 
 
 void snake::enqueueDirection( String direction ) 
