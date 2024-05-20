@@ -60,7 +60,7 @@ void sequence::startupSequence()
     case sequence::startupState::SHOW_DIGIT_3:
       if( update ) 
       {
-        leds::displayDigit( digits::digit_3,config::getGameConfig().SNAKE_COLOR );
+        leds::displayDigit( digits::digit_3,config::getGameConfig().SNAKE_BODY_COLOR );
         sequence::_currentState = sequence::startupState::SHOW_DIGIT_2;
         sequence::_previousMillis = currentMillis;
       }
@@ -70,7 +70,7 @@ void sequence::startupSequence()
       if( update ) 
       {
         leds::clear();
-        leds::displayDigit( digits::digit_2,config::getGameConfig().SNAKE_COLOR  );
+        leds::displayDigit( digits::digit_2,config::getGameConfig().SNAKE_BODY_COLOR );
         sequence::_currentState = sequence::startupState::SHOW_DIGIT_1;
         sequence::_previousMillis = currentMillis;
       }
@@ -80,7 +80,7 @@ void sequence::startupSequence()
       if( update ) 
       {
         leds::clear();
-        leds::displayDigit( digits::digit_1,config::getGameConfig().SNAKE_COLOR  );
+        leds::displayDigit( digits::digit_1,config::getGameConfig().SNAKE_BODY_COLOR );
         sequence::_currentState = sequence::startupState::DONE;
         sequence::_previousMillis = currentMillis;
       }

@@ -42,7 +42,6 @@ isJoystickConnected = True;
 
 while True:
     try:
-        
         hid_device.open(nimbus_vendor_id, nimbus_product_id)
         
         isJoystickConnected = True;

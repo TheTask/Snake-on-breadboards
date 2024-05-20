@@ -15,14 +15,15 @@ namespace snake
     LEFT,
     RIGHT
   }
-  inline lastDir = snake::direction::RIGHT;
-  inline cppQueue	_directionQueue( sizeof( snake::direction ),5,FIFO );	
+  inline volatile lastDir = snake::direction::RIGHT;
+  inline cppQueue	_directionQueue( sizeof( snake::direction ),20,FIFO );	
 
   inline SnakeSegment _storage[ leds::SIZE ];
-  inline Vector< SnakeSegment > snake_vec( _storage );
+  inline Vector< SnakeSegment > snakeVec( _storage );
   inline uint8_t board[ leds::SIZE ];
 
   inline FoodSegment _food;
+  inline uint8_t linearSnakeHeadIndex;
 
 
   void initBoard();

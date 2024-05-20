@@ -42,17 +42,17 @@ void snake::initFood()
   } 
   while( true );
 
-  leds::displayBoard( snake::board );
+  leds::displayBoard( snake::board,snake::linearSnakeHeadIndex );
 }
 
 
 void snake::move() 
 {
+
   if( !snake::_directionQueue.isEmpty() ) 
   {
     int8_t nextDirInt;
     snake::_directionQueue.pop( &nextDirInt );
-
     snake::lastDir = static_cast< snake::direction >( nextDirInt );
   }
 
@@ -73,39 +73,39 @@ void snake::move()
       head.incCol();
       break;
   }
-
+  snake::linearSnakeHeadIndex = head.getRow() * leds::WIDTH + head.getCol();
+  snake::snake_vec.push_back( head );
+  
   if( !snake::hasWon() )
   {
     if( head == snake::_food ) snake::initFood();
     else snake::deleteEndOfSnake();
   }
 
-  snake::snake_vec.push_back( head );
-  snake::board[ head.getRow() * leds::WIDTH + head.getCol() ] = 'O';
+  snake::board[ snake::linearSnakeHeadIndex ] = 'O';
 }
-
 
 
 void snake::enqueueDirection( String direction ) 
 {
   int8_t dir = -1;
-  snake::direction lastDir;
+  snake::direction lastTmpDir;
 
   if( !snake::_directionQueue.isEmpty() ) 
   {
-    int8_t peekDirInt;
-    snake::_directionQueue.peek( &peekDirInt );
-    lastDir = static_cast< snake::direction >( peekDirInt );
+    int8_t lastQueueEntry;
+    snake::_directionQueue.peekPrevious( &lastQueueEntry );
+    lastTmpDir = static_cast< snake::direction >( lastQueueEntry );
   } 
-  else lastDir = snake::lastDir;
+  else lastTmpDir = snake::lastDir;
 
-       if( ( direction == "U" || direction == "Y" ) && ( lastDir != snake::direction::DOWN ) )  dir = static_cast< int8_t >( snake::direction::UP );
-  else if( ( direction == "D" || direction == "A" ) && ( lastDir != snake::direction::UP ) )    dir = static_cast< int8_t >( snake::direction::DOWN );
-  else if( ( direction == "R" || direction == "B" ) && ( lastDir != snake::direction::LEFT ) )  dir = static_cast< int8_t >( snake::direction::RIGHT );
-  else if( ( direction == "L" || direction == "X" ) && ( lastDir != snake::direction::RIGHT ) ) dir = static_cast< int8_t >( snake::direction::LEFT );
+       if( ( direction == "U" || direction == "Y" ) && !( lastTmpDir == snake::direction::DOWN || lastTmpDir == snake::direction::UP ) ) dir = static_cast< int8_t >( snake::direction::UP );
+  else if( ( direction == "D" || direction == "A" ) && !( lastTmpDir == snake::direction::UP || lastTmpDir == snake::direction::DOWN ) ) dir = static_cast< int8_t >( snake::direction::DOWN );
+  else if( ( direction == "R" || direction == "B" ) && !( lastTmpDir == snake::direction::LEFT || lastTmpDir == snake::direction::RIGHT ) ) dir = static_cast< int8_t >( snake::direction::RIGHT );
+  else if( ( direction == "L" || direction == "X" ) && !( lastTmpDir == snake::direction::RIGHT || lastTmpDir == snake::direction::LEFT ) ) dir = static_cast< int8_t >( snake::direction::LEFT );
 
-  if( dir != -1 ) snake::_directionQueue.push( &dir );
-}
+  if( dir >= 0 && dir <= 3 ) snake::_directionQueue.push( &dir ); 
+} 
 
 
 void snake::deleteEndOfSnake()
@@ -119,7 +119,7 @@ void snake::deleteEndOfSnake()
 
 bool snake::hasWon()
 {
-  return snake::snake_vec.size() == leds::SIZE - ( 2 * leds::WIDTH + 2 * ( leds::HEIGHT - 2 ) );
+  return snake::snake_vec.size() == leds::SIZE - 2 * ( leds::WIDTH - 1 ) - 2 * ( leds::HEIGHT - 1 );
 }
  
 

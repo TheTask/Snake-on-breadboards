@@ -81,7 +81,7 @@ void game::game( char* lastButtonPressPtr )
         game::_lastTime = currentTime;
   
         snake::move();
-        leds::displayBoard( snake::board );
+        leds::displayBoard( snake::board,snake::linearSnakeHeadIndex );
         leds::sevenSegmentDisplayWrite( snake::snake_vec.size() - config::INIT_SNAKE_LENGTH );
 
         if( snake::hasGameEnded() ) 

@@ -18,15 +18,16 @@ void leds::sevenSegmentDisplayWrite( uint8_t input )
 }
 
 
-void leds::displayBoard( const uint8_t* board )
+void leds::displayBoard( const uint8_t* board,uint8_t snakeHeadLinearIndex )
 {
   for( uint8_t i = 0; i < leds::SIZE; i++ )
   {
          if( board[ i ] == '/' ) leds::_leds.setPixelColor( i,config::getGameConfig().BORDER_COLOR );
-    else if( board[ i ] == 'O' ) leds::_leds.setPixelColor( i,config::getGameConfig().SNAKE_COLOR );
+    else if( board[ i ] == 'O' ) leds::_leds.setPixelColor( i,config::getGameConfig().SNAKE_BODY_COLOR );
     else if( board[ i ] == 'X' ) leds::_leds.setPixelColor( i,config::FOOD_COLOR );
     else if( board[ i ] == ' ' ) leds::_leds.setPixelColor( i,colors::OFF );
   }
+  leds::_leds.setPixelColor( snakeHeadLinearIndex,config::getGameConfig().SNAKE_HEAD_COLOR );
 
   leds::_leds.show();
 }

@@ -22,7 +22,7 @@ namespace leds
 
   void sevenSegmentDisplayWrite( uint8_t input );
 
-  void displayBoard( const uint8_t* board );
+  void displayBoard( const uint8_t* board,uint8_t snakeHeadLinearIndex );
   void displayDigit( const char* digit,uint32_t color );
   void displayPixel( uint8_t pixelIndex,uint32_t color );
   void displayColor( uint32_t color );
