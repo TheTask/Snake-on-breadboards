@@ -28,9 +28,15 @@ namespace leds
   void displayColor( uint32_t color );
   void displayConfigScene();
 
+  void drawSquare( uint8_t topLeftCornerRow,uint8_t topLeftCornerCol,uint8_t sideLength,uint32_t color );
   void _drawHorizontalLine( uint8_t row,uint8_t col,uint8_t length,uint32_t color );
   void _drawVerticalLine( uint8_t row,uint8_t col,uint8_t length,uint32_t color );
-  void drawSquare( uint8_t topLeftCornerRow,uint8_t topLeftCornerCol,uint8_t sideLength,uint32_t color );
+  
+  void drawSpiral( int16_t delayMs,uint32_t color );
+  void _movePixelRight( uint8_t numPixels,uint8_t* currentPixelIndex,int16_t delayMs,uint32_t color );
+  void _movePixelDown(  uint8_t numPixels,uint8_t* currentPixelIndex,int16_t delayMs,uint32_t color );
+  void _movePixelLeft(  uint8_t numPixels,uint8_t* currentPixelIndex,int16_t delayMs,uint32_t color );
+  void _movePixelUp(    uint8_t numPixels,uint8_t* currentPixelIndex,int16_t delayMs,uint32_t color );
 }
 
 #endif

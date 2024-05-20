@@ -90,6 +90,18 @@ void leds::displayConfigScene()
   leds::_leds.show();
 }
 
+
+void leds::drawSquare( uint8_t topLeftCornerRow,uint8_t topLeftCornerCol,uint8_t sideLength,uint32_t color )
+{
+  leds::_drawHorizontalLine( topLeftCornerRow,topLeftCornerCol,sideLength,color );
+  leds::_drawHorizontalLine( topLeftCornerRow + sideLength - 1,topLeftCornerCol,sideLength,color );
+  leds::_drawVerticalLine( topLeftCornerRow,topLeftCornerCol,sideLength,color );
+  leds::_drawVerticalLine( topLeftCornerRow,topLeftCornerCol + sideLength - 1,sideLength,color );
+
+  leds::_leds.show();
+}
+
+
 void leds::_drawHorizontalLine( uint8_t row,uint8_t col,uint8_t length,uint32_t color )
 {
   for( uint8_t i = 0; i < length; i++ )  leds::_leds.setPixelColor( row * leds::WIDTH + col + i,color );
@@ -102,12 +114,66 @@ void leds::_drawVerticalLine( uint8_t row,uint8_t col,uint8_t length,uint32_t co
 }
 
 
-void leds::drawSquare( uint8_t topLeftCornerRow,uint8_t topLeftCornerCol,uint8_t sideLength,uint32_t color )
+void leds::drawSpiral( int16_t delayMs,uint32_t color )
 {
-  leds::_drawHorizontalLine( topLeftCornerRow,topLeftCornerCol,sideLength,color );
-  leds::_drawHorizontalLine( topLeftCornerRow + sideLength - 1,topLeftCornerCol,sideLength,color );
-  leds::_drawVerticalLine( topLeftCornerRow,topLeftCornerCol,sideLength,color );
-  leds::_drawVerticalLine( topLeftCornerRow,topLeftCornerCol + sideLength - 1,sideLength,color );
+  uint8_t pixelIndex = 0;
+  uint8_t* currentPixelIndex = &pixelIndex;
 
-  leds::_leds.show();
+  uint8_t initHeight = leds::HEIGHT;
+  uint8_t initWidth = leds::WIDTH;
+
+  //draws a basic spiral on top of existing image
+  _movePixelRight( leds::WIDTH,currentPixelIndex,delayMs,color  );
+
+  for( uint8_t i = 0; i < leds::WIDTH / 2; i++ )
+  {
+    leds::_movePixelDown( initHeight--,currentPixelIndex,delayMs,color );
+    leds::_movePixelLeft( initWidth--,currentPixelIndex,delayMs,color );
+    leds::_movePixelUp( initHeight--,currentPixelIndex,delayMs,color );
+    leds::_movePixelRight( initWidth--,currentPixelIndex,delayMs,color );
+  }
+}
+
+
+void leds::_movePixelRight( uint8_t numPixels,uint8_t* currentPixelIndex,int16_t delayMs,uint32_t color )
+{
+  for( uint8_t i = 0; i < numPixels; i++ )
+  {
+    leds::displayPixel( (*currentPixelIndex)++,color );
+    delay( delayMs );
+  }
+  (*currentPixelIndex)--;
+}
+
+
+void leds::_movePixelDown( uint8_t numPixels,uint8_t* currentPixelIndex,int16_t delayMs,uint32_t color  )
+{
+  for( uint8_t i = 0; i < numPixels; i++ )
+  {
+    leds::displayPixel( (*currentPixelIndex)+= leds::WIDTH,color );
+    delay( delayMs );
+  }
+  (*currentPixelIndex)-= leds::WIDTH;
+}
+
+
+void leds::_movePixelLeft( uint8_t numPixels,uint8_t* currentPixelIndex,int16_t delayMs,uint32_t color  )
+{
+  for( uint8_t i = 0; i < numPixels; i++ )
+  {
+    leds::displayPixel( (*currentPixelIndex)--,color );
+    delay( delayMs );
+  }
+  (*currentPixelIndex)++;
+}
+
+
+void leds::_movePixelUp( uint8_t numPixels,uint8_t* currentPixelIndex,int16_t delayMs,uint32_t color  )
+{
+  for( uint8_t i = 0; i < numPixels; i++ )
+  {
+    leds::displayPixel( (*currentPixelIndex)-= leds::WIDTH,color);
+    delay( delayMs );
+  }
+  (*currentPixelIndex)+= leds::WIDTH;
 }

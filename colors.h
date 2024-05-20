@@ -15,12 +15,12 @@ namespace colors
   static const uint32_t BLUE           = 0x00000044;
 
   static const uint32_t BRIGHT_MAGENTA = BRIGHT_RED | BRIGHT_BLUE;
-  static const uint32_t MAGENTA        = RED | BLUE;
+  static const uint32_t MAGENTA        = BLUE  | RED;
   static const uint32_t YELLOW         = GREEN | RED;
   static const uint32_t CYAN           = GREEN | BLUE;
 
   static const uint32_t BRIGHT_WHITE   = 0xFFFFFFFF;
-  static const uint32_t WHITE          = 0x55555555;
+  static const uint32_t WHITE          = 0x44444444;
   static const uint32_t OFF            = 0x00000000; 
 }
 

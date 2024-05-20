@@ -1,49 +1,5 @@
 #include "sequences.h"
 
-void sequence::_movePixelRight( uint8_t numPixels,uint8_t* currentPixelIndex )
-{
-  for( uint8_t i = 0; i < numPixels; i++ )
-  {
-    leds::displayPixel( (*currentPixelIndex)++,sequence::_spiralColor );
-    delay( sequence::_fiveMsDelay );
-  }
-  (*currentPixelIndex)--;
-}
-
-
-void sequence::_movePixelDown( uint8_t numPixels,uint8_t* currentPixelIndex )
-{
-  for( uint8_t i = 0; i < numPixels; i++ )
-  {
-    leds::displayPixel( (*currentPixelIndex)+= leds::WIDTH,sequence::_spiralColor );
-    delay( sequence::_fiveMsDelay );
-  }
-  (*currentPixelIndex)-= leds::WIDTH;
-}
-
-
-void sequence::_movePixelLeft( uint8_t numPixels,uint8_t* currentPixelIndex )
-{
-  for( uint8_t i = 0; i < numPixels; i++ )
-  {
-    leds::displayPixel( (*currentPixelIndex)--,sequence::_spiralColor );
-    delay( sequence::_fiveMsDelay );
-  }
-  (*currentPixelIndex)++;
-}
-
-
-void sequence::_movePixelUp( uint8_t numPixels,uint8_t* currentPixelIndex )
-{
-  for( uint8_t i = 0; i < numPixels; i++ )
-  {
-    leds::displayPixel( (*currentPixelIndex)-= leds::WIDTH,sequence::_spiralColor );
-    delay( sequence::_fiveMsDelay );
-  }
-  (*currentPixelIndex)+= leds::WIDTH;
-}
-
-
 void sequence::startupSequence() 
 {
   uint64_t currentMillis = millis();
@@ -100,23 +56,7 @@ void sequence::startupSequence()
 
 void sequence::gameoverSequence()
 {
-  uint8_t pixelIndex = 0;
-  uint8_t* currentPixelIndex = &pixelIndex;
-
-  uint8_t initHeight = leds::HEIGHT;
-  uint8_t initWidth = leds::WIDTH;
-
-  //draws a basic spiral on top of existing image
-  _movePixelRight( leds::WIDTH,currentPixelIndex );
-
-  for( uint8_t i = 0; i < leds::WIDTH / 2; i++ )
-  {
-    _movePixelDown( initHeight--,currentPixelIndex );
-    _movePixelLeft( initWidth--,currentPixelIndex );
-    _movePixelUp( initHeight--,currentPixelIndex );
-    _movePixelRight( initWidth--,currentPixelIndex );
-  }
-
+  leds::drawSpiral( sequence::_fiveMsDelay,sequence::_spiralColor );
   delay( sequence::_twoSecondDelay );
 }
 

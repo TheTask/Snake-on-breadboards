@@ -28,11 +28,6 @@ namespace sequence
   inline startupState _currentState = startupState::INIT;
   inline volatile bool isStartupSequenceDone = false;
   static const uint32_t _spiralColor = colors::RED;
-  
-  void _movePixelRight( uint8_t numPixels,uint8_t* currentPixelIndex );
-  void _movePixelDown(  uint8_t numPixels,uint8_t* currentPixelIndex );
-  void _movePixelLeft(  uint8_t numPixels,uint8_t* currentPixelIndex );
-  void _movePixelUp(    uint8_t numPixels,uint8_t* currentPixelIndex );
 
   void startupSequence();
   void gameoverSequence();
