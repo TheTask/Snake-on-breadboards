@@ -20,7 +20,7 @@ void snake::initSnake()
 	for( uint8_t i = 0; i < config::INIT_SNAKE_LENGTH; i++ )
 	{
 		SnakeSegment segment = SnakeSegment( leds::HEIGHT / 2,i + 1 ); 
-		snake::snake_vec.push_back( segment );
+		snake::snakeVec.push_back( segment );
 		snake::board[ ( leds::HEIGHT / 2 * leds::WIDTH ) + i + 1 ] = 'O';
 	}
 }
@@ -56,7 +56,7 @@ void snake::move()
     snake::lastDir = static_cast< snake::direction >( nextDirInt );
   }
 
-  SnakeSegment head = snake::snake_vec.back();
+  SnakeSegment head = snake::snakeVec.back();
 
   switch( snake::lastDir ) 
   {
@@ -74,7 +74,7 @@ void snake::move()
       break;
   }
   snake::linearSnakeHeadIndex = head.getRow() * leds::WIDTH + head.getCol();
-  snake::snake_vec.push_back( head );
+  snake::snakeVec.push_back( head );
   
   if( !snake::hasWon() )
   {
@@ -110,28 +110,28 @@ void snake::enqueueDirection( String direction )
 
 void snake::deleteEndOfSnake()
 {
-  SnakeSegment tail = snake::snake_vec[ 0 ];
+  SnakeSegment tail = snake::snakeVec[ 0 ];
 
   snake::board[ tail.getRow() * leds::WIDTH + tail.getCol() ] = ' ';	
-	snake::snake_vec.remove( 0 ); 
+	snake::snakeVec.remove( 0 ); 
 }
 
 
 bool snake::hasWon()
 {
-  return snake::snake_vec.size() == leds::SIZE - 2 * ( leds::WIDTH - 1 ) - 2 * ( leds::HEIGHT - 1 );
+  return snake::snakeVec.size() == leds::SIZE - 2 * ( leds::WIDTH - 1 ) - 2 * ( leds::HEIGHT - 1 );
 }
  
 
 bool snake::hasLost()
 { 
-  SnakeSegment head = snake::snake_vec.back();
+  SnakeSegment head = snake::snakeVec.back();
 
   if( head.getRow() == leds::HEIGHT - 1 || head.getCol() == leds::WIDTH - 1 ||  head.getRow() == 0 || head.getCol() == 0 ) return true;
 
-  for( uint8_t i = 0; i < snake::snake_vec.size() - 1; i++ )
+  for( uint8_t i = 0; i < snake::snakeVec.size() - 1; i++ )
 	{
-		if( head == snake::snake_vec[ i ] ) return true;
+		if( head == snake::snakeVec[ i ] ) return true;
 	}
   return false; 
 }
