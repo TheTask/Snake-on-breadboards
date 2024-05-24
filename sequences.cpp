@@ -56,13 +56,18 @@ void sequence::startupSequence()
 
 void sequence::gameoverSequence()
 {
+  delay( sequence::_halfSecondDelay );
+
   leds::drawSpiral( sequence::_fiveMsDelay,sequence::_spiralColor );
+  
   delay( sequence::_twoSecondDelay );
 }
 
 
 void sequence::gamewonSequence()
 {
+  delay( sequence::_halfSecondDelay );
+
   leds::drawSquare( 6,6,2,colors::CYAN );
   delay( sequence::_halfSecondDelay );
 

@@ -48,7 +48,7 @@ while True:
         arduino.write(f"T\n".encode())
 
         print("Joystick connected!")
-        print("T")
+        #print("T")
 
         while True:
             # Read the current state
@@ -92,7 +92,7 @@ while True:
             
         arduino.write(f"F\n".encode())
         
-        print("F")
-        print("Joystick not connected. Retrying in 10s...")
+        print("Joystick not connected. Retrying in 5s...")
+        #print("F")
         
-        time.sleep(10)
+        time.sleep(5)

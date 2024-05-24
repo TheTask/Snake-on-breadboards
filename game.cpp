@@ -85,11 +85,7 @@ void game::game( char* lastButtonPressPtr )
         leds::displayBoard( snake::board,snake::linearSnakeHeadIndex );
         leds::sevenSegmentDisplayWrite( snake::snakeVec.size() - config::INIT_SNAKE_LENGTH );
 
-        if( snake::hasGameEnded() ) 
-        {
-          game::_currentGameState = game::gameState::ENDING_SEQUENCE;
-          delay( sequence::_halfSecondDelay );
-        }
+        if( snake::hasGameEnded() ) game::_currentGameState = game::gameState::ENDING_SEQUENCE;
       }
       break;
 
