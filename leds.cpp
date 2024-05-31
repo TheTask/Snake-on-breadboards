@@ -122,7 +122,6 @@ void leds::drawSpiral( int16_t delayMs,uint32_t color )
   uint8_t initHeight = leds::HEIGHT;
   uint8_t initWidth = leds::WIDTH;
 
-  //draws a basic spiral on top of existing image
   _movePixelRight( leds::WIDTH,currentPixelIndex,delayMs,color  );
 
   for( uint8_t i = 0; i < leds::WIDTH / 2; i++ )

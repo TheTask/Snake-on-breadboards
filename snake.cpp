@@ -19,8 +19,7 @@ void snake::initSnake()
 {
 	for( uint8_t i = 0; i < config::INIT_SNAKE_LENGTH; i++ )
 	{
-		SnakeSegment segment = SnakeSegment( leds::HEIGHT / 2,i + 1 ); 
-		snake::snakeVec.push_back( segment );
+		snake::snakeVec.push_back( SnakeSegment( leds::HEIGHT / 2,i + 1 ) );
 		snake::board[ ( leds::HEIGHT / 2 * leds::WIDTH ) + i + 1 ] = 'O';
 	}
 }
@@ -48,7 +47,6 @@ void snake::initFood()
 
 void snake::move() 
 {
-
   if( !snake::_directionQueue.isEmpty() ) 
   {
     int8_t nextDirInt;

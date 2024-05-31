@@ -29,7 +29,7 @@ namespace config
     gameConfig( uint32_t snakeHeadColor,uint32_t snakeBodyColor,uint32_t borderColor,uint64_t updateDelay )
       : 
       SNAKE_HEAD_COLOR( snakeHeadColor ),
-      SNAKE_BODY_COLOR( snakeBodyColor),
+      SNAKE_BODY_COLOR( snakeBodyColor ),
       BORDER_COLOR( borderColor ),
       UPDATE_DELAY( updateDelay )
       {}
